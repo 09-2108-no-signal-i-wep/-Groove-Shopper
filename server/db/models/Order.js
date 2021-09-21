@@ -9,11 +9,6 @@ const Order = db.define('order', {
       notEmpty: true,
     },
   },
-  isOrder: {
-    type: BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
   isCart: {
     type: BOOLEAN,
     allowNull: false,
