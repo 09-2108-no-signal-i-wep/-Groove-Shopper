@@ -20,3 +20,5 @@ describe('Home', () => {
     expect(home.find('h3').text()).to.be.equal('Welcome, cody')
   })
 })
+
+// AllAlbums component tests
