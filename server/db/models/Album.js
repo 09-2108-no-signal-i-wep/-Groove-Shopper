@@ -23,7 +23,7 @@ const Album = db.define('album', {
     defaultValue: 19.99,
     validate: { notEmpty: true },
   },
-  release: {
+  releaseYear: {
     type: INTEGER,
     allowNull: false,
     validate: { notEmpty: true },
