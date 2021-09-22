@@ -19,3 +19,15 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/* ////////////////////////////// ALL ALBUMS STYLING ////////////////////////////// */
+img {
+  height: 100px;
+  width: 100px;
+}
+
+.all-albums {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
