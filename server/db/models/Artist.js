@@ -1,16 +1,16 @@
-const { STRING, TEXT } = require('sequelize');
-const db = require('../db');
+const { STRING, TEXT } = require("sequelize");
+const db = require("../db");
 
-const Artist = db.define('artist', {
+const Artist = db.define("artist", {
   name: {
     type: STRING,
     allowNull: false,
-    validate: {notEmpty: true},
+    validate: { notEmpty: true },
   },
   bio: {
     type: TEXT,
     // allowNull: false,
-  }
-} )
+  },
+});
 
-module.exports = Artist
+module.exports = Artist;
