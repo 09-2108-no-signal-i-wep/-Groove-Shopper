@@ -1,7 +1,7 @@
-const { STRING, DECIMAL, INTEGER, TEXT } = require('sequelize');
-const db = require('../db');
+const { STRING, DECIMAL, INTEGER, TEXT } = require("sequelize");
+const db = require("../db");
 
-const Album = db.define('album', {
+const Album = db.define("album", {
   genreId: {
     type: INTEGER,
     // allowNull: false,
@@ -32,7 +32,7 @@ const Album = db.define('album', {
     type: TEXT,
     allowNull: false,
     validate: { notEmpty: true },
-  }
-})
+  },
+});
 
-module.exports = Album
+module.exports = Album;
