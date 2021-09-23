@@ -1,23 +1,24 @@
-const router = require('express').Router()
-const { Album } = require('../db/models/Album')
+const router = require('express').Router();
+
+const { models: { Album } } = require('../db');
 
 // Path: /api/albums
-router.get('/', async(req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const albums = await Album.findAll()
-    res.json(albums)
-  } catch(error) {
-    next(error)
-  }})
+    const albums = await Album.findAll();
+    res.send(albums);
+  } catch (error) {
+    next(error);
+  }
+});
 
+// FOR ADMIN
+// router.post('/', async(req, res, next) => {
+//   try {
+//     const newAlbum = await Album.create(req.body)
+//     res.json(newAlbum)
+//   } catch(error) {
+//     next(error)
+//   }})
 
-  // For admin
-  // router.post('/', async(req, res, next) => {
-  //   try {
-  //     const newAlbum = await Album.create(req.body)
-  //     res.json(newAlbum)
-  //   } catch(error) {
-  //     next(error)
-  //   }})
-
-  module.exports = router;
+module.exports = router;

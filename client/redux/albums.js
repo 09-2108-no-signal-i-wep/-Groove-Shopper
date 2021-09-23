@@ -12,18 +12,17 @@ export const gotAlbums = (albums) => ({
 // Thunks
 export const fetchAlbums = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("/api/albums");
+    const { data } = await axios.get('/api/albums');
     dispatch(gotAlbums(data));
-  } catch(error) {
-    return `Error: ${error.message} || fetchAlbums`
+  } catch (error) {
+    return `Error: ${error.message} || fetchAlbums`;
   }
-}
+};
 
 // Reducers
 export default function albumsReducer(state = [], action) {
   switch (action.type) {
-    case GOT_ALL_ALBUMS:
-      return action.albums;
-      default: return state;
+    case GOT_ALL_ALBUMS: return action.albums;
+    default: return state;
   }
 }
