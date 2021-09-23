@@ -11,7 +11,7 @@ cart.get('/:userId', (req, res, next) => {
         },
         include: [
             {
-                model: Album,
+                model: Album, as: 'products'
             }
         ]
     })
@@ -24,7 +24,7 @@ cart.put('/', async (req, res, next) => {
     try {
         const userOrder = await Order.findOne({
             where: {
-                userId: req.params.id,
+                userId: req.params.userId,
                 isCart: true
             }
         });
