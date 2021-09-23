@@ -5,25 +5,29 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>FS-App-Template</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
+    <header className="header">
+      <h1 className="logo">
+          <Link to="/">Groovy Shopper</Link>
+      </h1>
+
+      
+      <nav className="main-nav">
+        {isLoggedIn ? (
+          <>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </>
+        ) : (
+          <> 
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
+          </>
+        )}
+        <Link to="/albums">Albums</Link>
+        <Link to="/cart">Cart</Link>
+      </nav>
+    </header>
   </div>
 )
 
