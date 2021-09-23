@@ -192,6 +192,15 @@ const orders = [{
   }
 ]
 
+const orderDetails = [
+  {
+    orderId: 1,
+    albumId: 2,
+
+
+  }
+]
+
 
 module.exports = {
   albums,

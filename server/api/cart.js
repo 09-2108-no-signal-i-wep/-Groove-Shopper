@@ -22,7 +22,7 @@ cart.get('/:userId', (req, res, next) => {
 // PUT /api/cart/
 cart.put('/', async (req, res, next) => {
     try {
-        const userOrder = await Order.findAll({
+        const userOrder = await Order.findOne({
             where: {
                 userId: req.params.id,
                 isCart: true
@@ -30,7 +30,7 @@ cart.put('/', async (req, res, next) => {
         });
         const updateSingleOrderAlbum = await OrderAlbum.findOne({
             where: {
-                orderId: userOrder[0].id,
+                orderId: userOrder.id,
                 albumId: req.body.id
             }
         })
@@ -53,11 +53,26 @@ cart.delete('/:albumId', async (req, res, next) => {
 });
 
 // PUT /api/cart/:userid/checkout
+<<<<<<< HEAD
 // cart.put('/:userid/checkout', async (req, res, next) => {
 //     try {
 //     } catch(err) {
 //         next(err);
 //     }
 // });
+=======
+cart.put('/:userid/checkout', (req, res, next) => {
+    Order.findOne({
+        where: {
+            userId: req.params.userId,
+            isCart: true
+        }})
+        .then((userOrder) => {
+            userOrder.update({ isCart: false});
+            res.send(userOrder);
+        })
+        .catch((err) => next(err));
+});
+>>>>>>> 31a2bb43eede3985b379f070eab684ff26bf0e4b
 
 module.exports = cart;
