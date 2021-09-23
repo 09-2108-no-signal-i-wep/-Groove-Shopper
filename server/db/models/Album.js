@@ -18,9 +18,9 @@ const Album = db.define("album", {
     validate: { notEmpty: true },
   },
   price: {
-    type: DECIMAL,
+    type: INTEGER,
     allowNull: false,
-    defaultValue: 19.99,
+    defaultValue: 1999,
     validate: { notEmpty: true },
   },
   releaseYear: {
