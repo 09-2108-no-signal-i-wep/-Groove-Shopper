@@ -21,7 +21,7 @@ form div {
   display: inline-block;
 }
 
-/* ==================================================================  
+/* ==================================================================
   Nav
 =====================================================================  */
 nav {
@@ -42,7 +42,7 @@ h2,
 h3,
 a {
   color: white;
-  font-family: 'Marker Felt', fantasy;
+  font-family: "Marker Felt", fantasy;
   font-weight: 400;
 }
 
@@ -66,7 +66,7 @@ a {
 
 .main-nav a:after {
   text-align: left;
-  content: '.';
+  content: ".";
   margin: 0;
   opacity: 0;
 }
@@ -79,13 +79,13 @@ a {
 
 .main-nav a:hover:after {
   z-index: -10;
-  animation: fill .6s forwards;
+  animation: fill 0.6s forwards;
   opacity: 1;
 }
 
 .header {
-  padding-top: .25em;
-  padding-bottom: .25em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
   border: 1px solid #130209;
   background-color: #002d73;
   box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
@@ -102,7 +102,6 @@ a {
     flex-direction: column;
     align-items: center;
   }
-
 }
 
 @media (min-width: 1025px) {
@@ -112,10 +111,10 @@ a {
   }
 }
 
-/* ==================================================================  
-  All Albums 
+/* ==================================================================
+  All Albums
 =====================================================================  */
-img {
+.all-albums-cover {
   height: 100px;
   width: 100px;
 }
@@ -124,4 +123,32 @@ img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+/* ==================================================================
+ SINGLE ALBUM
+=====================================================================  */
+
+.single-album-artwork {
+  height: 300px;
+  width: 300px;
+}
+
+.single-album-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.single-album-info h2,h3{
+  color: black;
+}
+
+#add-to-cart {
+  width: 100px;
+  height: 20px;
+}
+
+#single-album-quantity {
+  width: 50px;
+  height: 25px;
 }
