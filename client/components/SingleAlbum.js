@@ -7,18 +7,18 @@ import { fetchSingleAlbum } from "../redux/singleAlbum";
 class SingleAlbum extends Component {
   constructor() {
     super();
-    this.state = {
-      loading: true,
-    };
+    // this.state = {
+    //   loading: true,
+    // };
     this.adjustPrice = this.adjustPrice.bind(this);
   }
 
   componentDidMount() {
     console.log("*** COMPONENT MOUNTING *****");
     const albumId = this.props.match.params.albumId;
-    this.setState({
-      loading: false,
-    });
+    // this.setState({
+    //   loading: false,
+    // });
     this.props.fetchSingleAlbum(albumId);
     console.log("*** COMPONENT MOUNTED *****");
   }
@@ -33,11 +33,11 @@ class SingleAlbum extends Component {
     const { cover, price, releaseYear, title } = this.props.singleAlbum;
     const artist = this.props.singleAlbum.artist;
     console.log("ARTIST", artist);
-    const { loading } = this.state;
+    //const { loading } = this.state;
     // console.log('load', loading)
     const { adjustPrice } = this;
 
-    if (loading) {
+    if (artist === undefined) {
       return <h1>LOADING</h1>;
     } else {
       return (
@@ -48,9 +48,20 @@ class SingleAlbum extends Component {
           </div>
           <div className="single-album-info">
             <h2>{title}</h2>
-            {/* <h2>{artist.name}</h2> */}
+            <h2>{artist.name}</h2>
             <h3>{`$ ${adjustPrice(price)}`}</h3>
-            <button type='submit' id='add-to-cart'>Add To Cart!</button>
+            <div className="qty-box">
+              <input
+                id="single-album-quantity"
+                type="number"
+                name="qty"
+                min="1"
+                max="5"
+              />
+            </div>
+            <button type="submit" id="add-to-cart">
+              Add To Cart!
+            </button>
           </div>
         </div>
       );
