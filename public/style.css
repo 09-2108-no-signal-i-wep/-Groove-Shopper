@@ -138,3 +138,12 @@ a {
   display: flex;
   flex-direction: row;
 }
+
+.single-album-info h2,h3{
+  color: black;
+}
+
+#add-to-cart {
+  width: 100px;
+  height: 20px;
+}
