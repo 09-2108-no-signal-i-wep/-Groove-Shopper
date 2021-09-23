@@ -10,7 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/">Groovy Shopper</Link>
       </h1>
 
-      
+
       <nav className="main-nav">
         {isLoggedIn ? (
           <>
@@ -19,7 +19,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             </a>
           </>
         ) : (
-          <> 
+          <>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           </>
