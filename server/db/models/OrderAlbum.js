@@ -5,6 +5,10 @@ const OrderAlbum = db.define('orderAlbum', {
     quantity: {
         type: INTEGER,
         allowNull: false
+    },
+    cost: {
+        type: INTEGER,
+        defaultValue: 0
     }
 });
 

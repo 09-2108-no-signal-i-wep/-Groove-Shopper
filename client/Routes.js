@@ -5,8 +5,12 @@ import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import AllAlbums from "./components/AllAlbums";
 import { me } from "./store";
+
 import Cart from "./components/Cart";
 import Confirmation from "./components/Confirmation";
+
+import SingleAlbum from "./components/SingleAlbum";
+
 
 /**
  * COMPONENT
@@ -29,8 +33,12 @@ class Routes extends Component {
         ) : (
           <Switch>
             <Route exact path="/albums" component={AllAlbums} />
+
             <Route path="/cart/:userId" component={Cart} />
             <Route path="/confirmed/:orderId" component={Confirmation} />
+
+            <Route path="/albums/:albumId" component={SingleAlbum} />
+
 
             {/* <Route path='/' exact component={ Login } />
             <Route path="/login" component={Login} />

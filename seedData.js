@@ -189,8 +189,37 @@ const albums = [
   },
 ];
 
+const orders = [
+  {
+    userId: 1,
+    isCart: true,
+    total: 5000,
+  },
+  {
+    userId: 3,
+    isCart: false,
+    total: 1000,
+  },
+  {
+    userId: 5,
+    isCart: true,
+    total: 4200,
+  },
+];
+
+const orderDetails = [
+  {
+    orderId: 1,
+    albumId: 2,
+    quantity: 3,
+    cost: 3198,
+  },
+];
+
 module.exports = {
   albums,
   artists,
   users,
+  orders,
+  orderDetails,
 };
