@@ -15,7 +15,7 @@ const Order = db.define('order', {
     defaultValue: false,
   },
   total: {
-    type: DECIMAL,
+    type: INTEGER,
     allowNull: false,
   },
   date: {

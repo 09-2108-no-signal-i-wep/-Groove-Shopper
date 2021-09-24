@@ -2,21 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchAlbums } from "../redux/albums";
 
-// AllAlbums component
 class AllAlbums extends Component {
   constructor(props) {
     super(props);
   }
 
-  // Mounts to tree, loads data
   componentDidMount() {
-    if (this.props.getAlbums) {
-      // why is this here?
       this.props.getAlbums();
-    }
   }
 
-  // JSX to HTML
   render() {
     return (
       <div className="all-albums">
@@ -36,7 +30,6 @@ class AllAlbums extends Component {
 
 const mapState = (state) => ({ albums: state.albums });
 
-// Dispatch actions
 const mapDispatch = (dispatch) => ({
   getAlbums: () => dispatch(fetchAlbums()),
 });
