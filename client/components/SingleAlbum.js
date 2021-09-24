@@ -16,9 +16,6 @@ class SingleAlbum extends Component {
   componentDidMount() {
     console.log("*** COMPONENT MOUNTING *****");
     const albumId = this.props.match.params.albumId;
-    // this.setState({
-    //   loading: false,
-    // });
     this.props.fetchSingleAlbum(albumId);
     console.log("*** COMPONENT MOUNTED *****");
   }
