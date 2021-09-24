@@ -11,7 +11,7 @@ cart.get('/:userId', (req, res, next) => {
         },
         include: [
             {
-                model: Album, as: 'products'
+                model: Album,
             }
         ]
     })
@@ -53,14 +53,6 @@ cart.delete('/:albumId', async (req, res, next) => {
 });
 
 // PUT /api/cart/:userid/checkout
-<<<<<<< HEAD
-// cart.put('/:userid/checkout', async (req, res, next) => {
-//     try {
-//     } catch(err) {
-//         next(err);
-//     }
-// });
-=======
 cart.put('/:userid/checkout', (req, res, next) => {
     Order.findOne({
         where: {
@@ -73,6 +65,5 @@ cart.put('/:userid/checkout', (req, res, next) => {
         })
         .catch((err) => next(err));
 });
->>>>>>> 31a2bb43eede3985b379f070eab684ff26bf0e4b
 
 module.exports = cart;
