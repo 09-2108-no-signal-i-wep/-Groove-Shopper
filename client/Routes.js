@@ -6,6 +6,8 @@ import Home from "./components/Home";
 import AllAlbums from "./components/AllAlbums";
 import { me } from "./store";
 import SingleAlbum from "./components/SingleAlbum";
+import AdminWelcome from "./components/AdminStuff/AdminWelcome";
+import AdminAllProducts from "./components/AdminStuff/AdminAllProducts";
 
 /**
  * COMPONENT
@@ -29,6 +31,8 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/albums" component={AllAlbums} />
             <Route path="/albums/:albumId" component={SingleAlbum} />
+            <Route exact path="/admin" component={AdminWelcome} />
+            <Route exact path="/admin/albums" component={AdminAllProducts} />
 
             {/* <Route path='/' exact component={ Login } />
             <Route path="/login" component={Login} />

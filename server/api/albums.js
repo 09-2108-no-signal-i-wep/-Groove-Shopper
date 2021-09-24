@@ -30,7 +30,20 @@ albumRouter.get("/:albumId", async (req, res, next) => {
   }
 });
 
-// FOR ADMIN
+/* *************** FOR ADMIN *************** */
+
+albumRouter.delete('/', async (req,res,next) => {
+  try {
+    const toBeDeleted = await Album.findByPk(req.body.id);
+    await toBeDeleted.destroy();
+    res.send(toBeDeleted);
+  } catch (error) {
+    console.log('DELETE ALBUM ERROR', error)
+    next(error)
+  }
+})
+
+
 // albumRouter.post('/', async(req, res, next) => {
 //   try {
 //     const newAlbum = await Album.create(req.body)
