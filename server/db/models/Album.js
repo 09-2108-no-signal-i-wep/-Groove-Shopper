@@ -1,4 +1,4 @@
-const { STRING, DECIMAL, INTEGER, TEXT } = require("sequelize");
+const { STRING, INTEGER, TEXT } = require("sequelize");
 const db = require("../db");
 
 const Album = db.define("album", {
@@ -12,15 +12,15 @@ const Album = db.define("album", {
     allowNull: false,
     validate: { notEmpty: true },
   },
-  artistId: {
+  // artistId: {
+  //   type: INTEGER,
+  //   allowNull: false,
+  //   validate: { notEmpty: true },
+  // },
+  price: {
     type: INTEGER,
     allowNull: false,
-    validate: { notEmpty: true },
-  },
-  price: {
-    type: DECIMAL,
-    allowNull: false,
-    defaultValue: 19.99,
+    defaultValue: 1999,
     validate: { notEmpty: true },
   },
   releaseYear: {
