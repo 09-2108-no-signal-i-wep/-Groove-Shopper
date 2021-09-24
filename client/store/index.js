@@ -4,10 +4,12 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import albumsReducer from '../redux/albums';
+import singleAlbumReducer from '../redux/singleAlbum';
 
 const reducer = combineReducers({
   auth,
   albums: albumsReducer,
+  singleAlbum: singleAlbumReducer,
 });
 
 const middleware = composeWithDevTools(

@@ -19,8 +19,8 @@ Order.belongsToMany(Album, {
   through: OrderAlbum,
 });
 
-Album.hasOne(Artist);
-Artist.belongsTo(Album);
+Artist.hasMany(Album);
+Album.belongsTo(Artist, { foreignKey: "artistId" });
 
 Album.hasOne(Genre);
 Genre.belongsTo(Album);

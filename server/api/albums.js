@@ -1,9 +1,11 @@
-const router = require('express').Router();
+const albumRouter = require("express").Router();
 
-const { models: { Album } } = require('../db');
+const {
+  models: { Album, Artist },
+} = require("../db");
 
 // Path: /api/albums
-router.get('/', async (req, res, next) => {
+albumRouter.get("/", async (req, res, next) => {
   try {
     const albums = await Album.findAll();
     res.send(albums);
@@ -12,8 +14,24 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// GET /api/albums/:albumId
+albumRouter.get("/:albumId", async (req, res, next) => {
+  try {
+    console.log("in single album router");
+    const singleAlbum = await Album.findByPk(req.params.albumId, {
+      include: {
+        model: Artist,
+      },
+    });
+    res.json(singleAlbum);
+  } catch (error) {
+    console.log("GET single album error", error);
+    next(error);
+  }
+});
+
 // FOR ADMIN
-// router.post('/', async(req, res, next) => {
+// albumRouter.post('/', async(req, res, next) => {
 //   try {
 //     const newAlbum = await Album.create(req.body)
 //     res.json(newAlbum)
@@ -21,4 +39,4 @@ router.get('/', async (req, res, next) => {
 //     next(error)
 //   }})
 
-module.exports = router;
+module.exports = albumRouter;
