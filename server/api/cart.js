@@ -19,8 +19,10 @@ cart.get('/:userId', (req, res, next) => {
         .catch((err) => next(err));
 });
 
-// PUT /api/cart/
-cart.put('/', async (req, res, next) => {
+// POST /api/cart/:userId
+
+// PUT /api/cart/ -- updates quantity in cart
+cart.put('/:userId', async (req, res, next) => {
     try {
         const userOrder = await Order.findOne({
             where: {
@@ -42,8 +44,9 @@ cart.put('/', async (req, res, next) => {
         }
 });
 
-// PUT /api/cart/:albumId
-cart.delete('/:albumId', async (req, res, next) => {
+// PUT /api/cart/:userId -- deletes an album in the cart
+cart.put('/:userId', async (req, res, next) => {
+
     OrderAlbum.findByPk(req.params.id)
         .then((product) => {
             product.destroy();
