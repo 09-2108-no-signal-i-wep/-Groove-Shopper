@@ -21,18 +21,20 @@ class AllAlbums extends Component {
   render() {
     console.log(this.props);
     return (
-      <div className="all-albums">
+      <div className="all-albums-container">
         <h1>All Albums</h1>
-        {this.props.albums.map((album) => {
-          return (
-            <div key={album.id}>
-              <Link to={`/albums/${album.id}`}>
-                <img src={album.cover} className="all-albums-cover" />
-                <p>{album.title}</p>
-              </Link>
-            </div>
-          );
-        })}
+        <div className="all-albums">
+          {this.props.albums.map((album) => {
+            return (
+              <div key={album.id}>
+                <Link to={`/albums/${album.id}`}>
+                  <img src={album.cover} className="all-albums-cover" />
+                  <p>{album.title}</p>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
