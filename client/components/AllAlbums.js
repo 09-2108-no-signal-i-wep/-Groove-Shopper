@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchAlbums } from "../redux/albums";
 
 // AllAlbums component
@@ -18,17 +19,22 @@ class AllAlbums extends Component {
 
   // JSX to HTML
   render() {
+    console.log(this.props);
     return (
-      <div className="all-albums">
+      <div className="all-albums-container">
         <h1>All Albums</h1>
-        {this.props.albums.map((album) => {
-          return (
-            <div key={album.id}>
-              <img src={album.cover} className='all-albums-cover' />
-              <p>{album.title}</p>
-            </div>
-          );
-        })}
+        <div className="all-albums">
+          {this.props.albums.map((album) => {
+            return (
+              <div key={album.id}>
+                <Link to={`/albums/${album.id}`}>
+                  <img src={album.cover} className="all-albums-cover" />
+                  <p>{album.title}</p>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

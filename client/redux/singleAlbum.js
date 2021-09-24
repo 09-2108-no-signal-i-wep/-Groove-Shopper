@@ -15,6 +15,7 @@ const fetchSingleAlbum = (albumId) => {
   return async (dispatch) => {
     try {
       const { data: singleAlbum } = await axios.get(`/api/albums/${albumId}`);
+      console.log(singleAlbum)
       dispatch(getSingleAlbum(singleAlbum));
     } catch (error) {
       console.log("fetch single album error", error);

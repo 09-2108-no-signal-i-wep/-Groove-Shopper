@@ -38,8 +38,7 @@ nav {
   font-size: 1.7em;
 }
 
-h2,
-h3,
+
 a {
   color: white;
   font-family: "Marker Felt", fantasy;
@@ -115,13 +114,21 @@ a {
   All Albums
 =====================================================================  */
 .all-albums-cover {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
+}
+
+.all-albums-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .all-albums {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: flex-start;
 }
 
