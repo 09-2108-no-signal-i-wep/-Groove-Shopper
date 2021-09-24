@@ -1,7 +1,13 @@
 "use strict";
 
 const { db } = require("../server/db");
-const { User, Artist, Album, Order, OrderAlbum } = require("../server/db/models");
+const {
+  User,
+  Artist,
+  Album,
+  Order,
+  OrderAlbum,
+} = require("../server/db/models");
 const { albums, artists, users, orders, orderDetails } = require("../seedData");
 
 /**
@@ -12,36 +18,11 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating Users
-  await Promise.all(
-    artists.map((artist) => {
-      return Artist.create(artist);
-    })
-  );
-
-  await Promise.all(
-    albums.map((album) => {
-      return Album.create(album);
-    })
-  );
-
-  await Promise.all(
-    users.map((user) => {
-      return User.create(user);
-    })
-  );
-
-  await Promise.all(
-    orders.map(order => {
-      return Order.create(order);
-    })
-  )
-
-  await Promise.all(
-    orderDetails.map(detail => {
-      return OrderAlbum.create(detail);
-    })
-  )
+  await Artist.bulkCreate(artists);
+  await Album.bulkCreate(albums);
+  await User.bulkCreate(users);
+  await Order.bulkCreate(orders);
+  await OrderAlbum.bulkCreate(orderDetails);
 
   console.log(`seeded successfully`);
 }
