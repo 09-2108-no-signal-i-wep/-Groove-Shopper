@@ -60,7 +60,7 @@ class CartTable extends Component {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <img src={product.coverArt} />
+                  <img id='cart-img' src={product.coverArt} />
                 </TableCell>
                 <TableCell alight="right">{product.title}</TableCell>
                 <TableCell alight="right">{product.artist}</TableCell>

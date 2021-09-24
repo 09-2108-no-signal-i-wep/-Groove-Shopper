@@ -142,6 +142,11 @@ a {
   flex-direction: column;
 }
 
+#cart-img {
+  height: 180px;
+  width: 180px;
+}
+
 #total {
   color: black;
 }
@@ -154,6 +159,7 @@ a {
 .confirmation-container {
   display: flex;
   flex-direction: row;
+}
 
 /* ==================================================================
  SINGLE ALBUM
