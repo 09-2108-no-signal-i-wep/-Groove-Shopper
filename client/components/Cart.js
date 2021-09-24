@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
 import { fetchUserAlbumsInCart } from "../redux/cart"; // added import of thunk
 import CartTable from "./CartTable";
 
@@ -47,7 +41,18 @@ class Cart extends Component {
     //
 
     return (
-      <CartTable/>
+      <div className="cart-container">
+        <div id="cart-table">
+          <CartTable />
+        </div>
+        <div id="checkout-tools">
+          <h3 id="total">Total: $PlaceHolderPrice</h3>
+          {/* LINK IS A PLACEHOLDER */}
+          <Link to={`/confirmed/1`}>
+            <button type="submit">Complete Purchase!</button>
+          </Link>
+        </div>
+      </div>
     );
   }
 }
