@@ -10,6 +10,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <Link to="/">Groovy Shopper</Link>
       </h1>
 
+
       <nav className="main-nav">
         {isLoggedIn ? (
           <>
@@ -19,12 +20,15 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           </>
         ) : (
           <>
+
+
             <Link className="nav-links" to="/login">
               Login
             </Link>
             <Link className="nav-links" to="/signup">
               Sign Up
             </Link>
+
           </>
         )}
         <Link className="nav-links" to="/albums">
