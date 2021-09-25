@@ -42,10 +42,6 @@ cart.post("/:userId", async (req, res, next) => {
       cost: req.body.cost,
     });
 
-    console.log("BEFORE", userOrder);
-    userOrder.total = req.body.cost; // this does not work, but we do successfulll add a new OrderDetail page;
-    console.log("AFTER", userOrder);
-
     //console.log("NEWORDER", newOrderDetail);
     res.send(newOrderDetail); // unsure about this. Also need to update total in userOrder (cart);
   } catch (error) {
@@ -139,6 +135,15 @@ cart.put("/:userid/checkout", async (req, res, next) => {
   //     res.send(userOrder);
   //   })
   //   .catch((err) => next(err));
+});
+
+cart.post("/:userId", async (req, res, next) => {
+  try {
+    const newOrder = Order.create({ userId: req.params.userId, isCart: true });
+    res.send(newOrder);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = cart;
