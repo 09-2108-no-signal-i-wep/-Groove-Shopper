@@ -145,7 +145,7 @@ cart.put("/:userId/checkout", async (req, res, next) => {
 // WORKS!!
 cart.post("/:userId/checkout", async (req, res, next) => {
   try {
-    const newOrder = Order.create({ userId: req.params.userId, isCart: true, total: 0 });
+    const newOrder = Order.create({ userId: req.params.userId, isCart: true, total: 0 }); // remove teh total once we merge the serverFix PR ***** //
     console.log(newOrder);
     res.send(newOrder);
   } catch (error) {
