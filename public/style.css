@@ -189,3 +189,24 @@ a {
   height: 25px;
 
 }
+
+/* ==================================================================
+  CART 
+=====================================================================  */
+
+.cart-title {
+  font-size: 3em;
+  font-weight: 80;
+  text-align: center;
+  padding: 15px 25px;
+  border-bottom: 4px #DCB239 solid;
+}
+
+.cart-table {
+  min-width: 400;
+  max-width: 900;
+  border: 1px solid #002d73;
+  padding: 10px;
+  margin: auto;
+  width: 50%;
+}

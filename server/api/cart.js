@@ -27,27 +27,28 @@ cart.get("/:userId", (req, res, next) => {
 
 cart.post("/:userId", async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const { userId } = req.params;
+    const { albumId, cost, quantity } = req.body;
+
     const userOrder = await Order.findOne({
       where: {
         userId: userId,
         isCart: true,
       },
     });
-    const newOrderDetail = await OrderAlbum.create({
-      // want to add conditional if you click add to cart a second time
-      orderId: userOrder.userId,
-      albumId: req.body.albumId,
-      quantity: req.body.quantity,
-      cost: req.body.cost,
+
+    const newOrderDetail = await OrderAlbum.findOne({
+      where: {
+        orderId: userOrder.id,
+        albumId: albumId,
+      },
     });
 
-    console.log("BEFORE", userOrder);
-    userOrder.total = req.body.cost; // this does not work, but we do successfulll add a new OrderDetail page;
-    console.log("AFTER", userOrder);
+    newOrderDetail.quantity = quantity;
+    newOrderDetail.cost = cost * quantity;
+    await newOrderDetail.save();
+    res.send(userOrder);
 
-    //console.log("NEWORDER", newOrderDetail);
-    res.send(newOrderDetail); // unsure about this. Also need to update total in userOrder (cart);
   } catch (error) {
     console.log("cart POST error");
     next(error);
