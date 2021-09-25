@@ -6,7 +6,8 @@ const {
 
 const OrderAlbum = require("../db/models/OrderAlbum");
 
-// Path: /api/cart/:userId
+// Path: /api/cart/:userId\
+// WORKS!!
 cart.get("/:userId", (req, res, next) => {
   Order.findAll({
     where: {
@@ -24,7 +25,7 @@ cart.get("/:userId", (req, res, next) => {
 });
 
 // POST /api/cart/:userId - ADD TO CART. This creates a new set of ORDER-Album (Details)
-
+// WORKS!
 cart.post("/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
@@ -42,15 +43,14 @@ cart.post("/:userId", async (req, res, next) => {
       cost: req.body.cost,
     });
 
-    //console.log("NEWORDER", newOrderDetail);
-    res.send(newOrderDetail); // unsure about this. Also need to update total in userOrder (cart);
+    res.send(newOrderDetail);
   } catch (error) {
     console.log("cart POST error");
     next(error);
   }
 });
 
-// PUT /api/cart/:userId -- updates quantity in cart
+// PUT /api/cart/:userId -- updates quantity in cart - WORKS (MOSTLY) see below about updating cost
 cart.put("/:userId", async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
@@ -59,13 +59,14 @@ cart.put("/:userId", async (req, res, next) => {
         isCart: true,
       },
     });
+
     const updateSingleOrderAlbum = await OrderAlbum.findOne({
       where: {
         orderId: userOrder.id,
-        albumId: req.body.id,
+        albumId: req.body.albumId,
       },
     });
-    updateSingleOrderAlbum.quantity = req.body.quantity;
+    updateSingleOrderAlbum.quantity = req.body.quantity; // need to update cost;
     await updateSingleOrderAlbum.save();
     res.sendStatus(204);
   } catch (error) {
@@ -74,40 +75,56 @@ cart.put("/:userId", async (req, res, next) => {
 });
 
 // PUT /api/cart/:userId -- deletes an album in the cart
-cart.put("/:userId", async (req, res, next) => {
-  try {
-    // find the order based on userId where cart is true;
-    const userOrder = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isCart: true,
-      },
-    });
-    // find the associated orderAlbum table row;
-    const deleteSingleOrderAlbum = await OrderAlbum.findOne({
-      where: {
-        orderId: userOrder.id,
-        albumId: req.body.id,
-      },
-    });
+// SHOULD THIS BE A DELETE INSTEAD OF A PUT??
 
-    await deleteSingleOrderAlbum.destroy();
-    res.status(200).send(deleteSingleOrderAlbum);
-  } catch (error) {
-    console.log("Delete from cart error API");
-    next(error);
-  }
+// cart.put("/:userId", async (req, res, next) => {
+//   try {
+//     // find the order based on userId where cart is true;
+//     const userOrder = await Order.findOne({
+//       where: {
+//         userId: req.params.userId,
+//         isCart: true,
+//       },
+//     });
+//     console.log('USERORDER', userOrder)
+//     console.log('REQ BODY', req.body)
+//     // find the associated orderAlbum table row;
+//     const deleteSingleOrderAlbum = await OrderAlbum.findOne({
+//       where: {
+//         orderId: userOrder.id,
+//         albumId: req.body,
+//       },
+//     });
 
-  // OrderAlbum.findByPk(req.params.id)
-  //     .then((product) => {
-  //         product.destroy();
-  //         res.status(200).send(product);
-  //     })
-  //     .catch((err) => next(err));
-});
+//     await deleteSingleOrderAlbum.destroy();
+//     res.status(200).send(deleteSingleOrderAlbum);
+//   } catch (error) {
+//     console.log("Delete from cart error API");
+//     next(error);
+//   }
+
+// OrderAlbum.findByPk(req.params.id)
+//     .then((product) => {
+//         product.destroy();
+//         res.status(200).send(product);
+//     })
+//     .catch((err) => next(err));
+//});
+
+/*
+CHECKOUT PROCESS
+Since each user starts out with an empty cart, the checkout button needs to do two things.
+1. Change current cart to 'isCart = false' to set the current order into a completed order (used later for order history)
+2. Create a brand new cart that is empty, waiting for the next user order
+
+PUT updates it (#1)
+POST creates a new one with isCart = true (#2)
+
+*/
 
 // PUT /api/cart/:userid/checkout -- Changes order from cart to completed
-cart.put("/:userid/checkout", async (req, res, next) => {
+// WORKS
+cart.put("/:userId/checkout", async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
       where: {
@@ -117,29 +134,19 @@ cart.put("/:userid/checkout", async (req, res, next) => {
     });
 
     userOrder.isCart = false;
-    // need to create another user order that is empty
-    res.send(userOrder);
+    await userOrder.save();
+    res.sendStatus(204);
   } catch (error) {
     console.log("API CHECKOUT ERROR");
     next(error);
   }
-
-  // Order.findOne({
-  //   where: {
-  //     userId: req.params.userId,
-  //     isCart: true,
-  //   },
-  // })
-  //   .then((userOrder) => {
-  //     userOrder.update({ isCart: false });
-  //     res.send(userOrder);
-  //   })
-  //   .catch((err) => next(err));
 });
 
-cart.post("/:userId", async (req, res, next) => {
+// WORKS!!
+cart.post("/:userId/checkout", async (req, res, next) => {
   try {
-    const newOrder = Order.create({ userId: req.params.userId, isCart: true });
+    const newOrder = Order.create({ userId: req.params.userId, isCart: true, total: 0 });
+    console.log(newOrder);
     res.send(newOrder);
   } catch (error) {
     next(error);
