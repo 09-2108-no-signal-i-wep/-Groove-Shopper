@@ -196,9 +196,19 @@ const orders = [
     total: 5000,
   },
   {
+    userId: 2,
+    isCart: true,
+    total: 0,
+  },
+  {
     userId: 3,
     isCart: false,
-    total: 1000,
+    total: 8592,
+  },
+  {
+    userId: 4,
+    isCart: true,
+    total: 0,
   },
   {
     userId: 5,
@@ -213,6 +223,24 @@ const orderDetails = [
     albumId: 2,
     quantity: 3,
     cost: 3198,
+  },
+  {
+    orderId: 1,
+    albumId: 1,
+    quantity: 1,
+    cost: 1099,
+  },
+  {
+    orderId: 3,
+    albumId: 8,
+    quantity: 1,
+    cost: 8592,
+  },
+  {
+    orderId: 5,
+    albumId: 7,
+    quantity: 1,
+    cost: 300,
   },
 ];
 
