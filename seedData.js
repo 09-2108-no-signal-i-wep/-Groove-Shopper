@@ -193,7 +193,10 @@ const orders = [
   {
     userId: 1,
     isCart: true,
-    total: 5000,
+  },
+  {
+    userId: 2,
+    isCart: true,
   },
   {
     userId: 2,
@@ -213,7 +216,6 @@ const orders = [
   {
     userId: 5,
     isCart: true,
-    total: 4200,
   },
 ];
 

@@ -1,9 +1,7 @@
 const cart = require("express").Router();
-
 const {
   models: { Album, Order },
 } = require("../db");
-
 const OrderAlbum = require("../db/models/OrderAlbum");
 
 // Path: /api/cart/:userId
@@ -55,7 +53,8 @@ cart.post("/:userId", async (req, res, next) => {
   }
 });
 
-// PUT /api/cart/:userId -- updates quantity in cart
+
+// PUT /api/cart/ -- updates quantity in cart
 cart.put("/:userId", async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
