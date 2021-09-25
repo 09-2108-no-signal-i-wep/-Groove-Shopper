@@ -1,8 +1,8 @@
 const cart = require("express").Router();
-
 const {
-  models: { Album, Order, OrderAlbum },
+  models: { Album, Order },
 } = require("../db");
+const OrderAlbum = require("../db/models/OrderAlbum");
 
 // Path: /api/cart/:userId
 cart.get("/:userId", (req, res, next) => {
@@ -21,17 +21,38 @@ cart.get("/:userId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-// POST /api/cart/:userId
+// POST /api/cart/:userId - ADD TO CART. This creates a new set of ORDER-Album (Details)
 
-cart.post("/:userId", (req, res, next) => {
+cart.post("/:userId", async (req, res, next) => {
   try {
-    const userId = req.params.userId;
-    const { data } = null;
+    const { userId } = req.params;
+    const { albumId, cost, quantity } = req.body;
+
+    const userOrder = await Order.findOne({
+      where: {
+        userId: userId,
+        isCart: true,
+      },
+    });
+
+    const newOrderDetail = await OrderAlbum.findOne({
+      where: {
+        orderId: userOrder.id,
+        albumId: albumId,
+      },
+    });
+
+    newOrderDetail.quantity = quantity;
+    newOrderDetail.cost = cost * quantity;
+    await newOrderDetail.save();
+    res.send(userOrder);
+
   } catch (error) {
     console.log("cart POST error");
     next(error);
   }
 });
+
 
 // PUT /api/cart/ -- updates quantity in cart
 cart.put("/:userId", async (req, res, next) => {
@@ -90,18 +111,34 @@ cart.put("/:userId", async (req, res, next) => {
 });
 
 // PUT /api/cart/:userid/checkout -- Changes order from cart to completed
-cart.put("/:userid/checkout", (req, res, next) => {
-  Order.findOne({
-    where: {
-      userId: req.params.userId,
-      isCart: true,
-    },
-  })
-    .then((userOrder) => {
-      userOrder.update({ isCart: false });
-      res.send(userOrder);
-    })
-    .catch((err) => next(err));
+cart.put("/:userid/checkout", async (req, res, next) => {
+  try {
+    const userOrder = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCart: true,
+      },
+    });
+
+    userOrder.isCart = false;
+    // need to create another user order that is empty
+    res.send(userOrder);
+  } catch (error) {
+    console.log("API CHECKOUT ERROR");
+    next(error);
+  }
+
+  // Order.findOne({
+  //   where: {
+  //     userId: req.params.userId,
+  //     isCart: true,
+  //   },
+  // })
+  //   .then((userOrder) => {
+  //     userOrder.update({ isCart: false });
+  //     res.send(userOrder);
+  //   })
+  //   .catch((err) => next(err));
 });
 
 module.exports = cart;

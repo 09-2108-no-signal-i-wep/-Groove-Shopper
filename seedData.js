@@ -199,12 +199,19 @@ const orders = [
     isCart: true,
   },
   {
+    userId: 2,
+    isCart: true,
+    total: 0,
+  },
+  {
     userId: 3,
     isCart: false,
+    total: 8592,
   },
   {
     userId: 4,
     isCart: true,
+    total: 0,
   },
   {
     userId: 5,

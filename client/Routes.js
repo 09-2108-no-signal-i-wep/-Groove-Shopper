@@ -34,7 +34,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/albums" component={AllAlbums} />
 
-            <Route path="/cart/:userId" component={Cart} />
+            <Route path="/cart" component={Cart} />
             <Route path="/confirmed/:orderId" component={Confirmation} />
 
             <Route path="/albums/:albumId" component={SingleAlbum} />
