@@ -26,9 +26,7 @@ class Cart extends Component {
     } else {
       let localCart = localStorage.getItem('CART');
       if(!localCart){
-        let cartArr = [];
-        console.log('cart created here')
-        localStorage.setItem('CART', JSON.stringify(cartArr));
+        return
       } else {
         const guestUser = JSON.parse(localStorage.getItem('CART'));
         console.log('guest user', guestUser)
@@ -68,7 +66,6 @@ class Cart extends Component {
       <div>
         <h1>Your Cart is Empty!</h1>
       </div>
-
       )
     }
 
