@@ -15,20 +15,23 @@ class AdminAllAlbums extends Component {
     this.props.fetchAlbums();
   }
 
-  deleteButton(event) {
-    console.log(event.target.album)
+  deleteButton(albumId) {
+    console.log(albumId);
+    this.props.deleteAlbum(albumId);
   }
 
   // JSX to HTML
   render() {
-    const {deleteButton} = this;
+    const { deleteButton } = this;
     return (
       <div className="all-albums">
         <h1>All Albums</h1>
         {this.props.albums.map((album) => {
           return (
             <div key={album.id}>
-              <button type="submit" onClick={deleteButton}>X</button>
+              <button type="submit" onClick={() => deleteButton(album.id)}>
+                X
+              </button>
               <img src={album.cover} className="all-albums-cover" />
               <p>{album.title}</p>
               <button type="submit">Update...</button>

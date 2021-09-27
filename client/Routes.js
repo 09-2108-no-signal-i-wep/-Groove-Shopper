@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import {Login, Signup} from "./components/AuthForm";
+import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import AllAlbums from "./components/AllAlbums";
 import { me } from "./store";
@@ -10,7 +10,8 @@ import Cart from "./components/Cart";
 import Confirmation from "./components/Confirmation";
 
 import SingleAlbum from "./components/SingleAlbum";
-
+import AdminWelcome from "./components/Admin-Components/AdminWelcome";
+import AdminAllAlbums from "./components/Admin-Components/AdminAllAlbums";
 
 /**
  * COMPONENT
@@ -40,7 +41,11 @@ class Routes extends Component {
             <Route path="/albums/:albumId" component={SingleAlbum} />
 
             <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/admin" component={AdminWelcome} />
+            <Route path="/admin/albums" component={AdminAllAlbums} />
+
+            {/* {/* <Route path='/' exact component={ Login } />
+            <Route path="/login" component={Login} /> */}
           </Switch>
         )}
       </div>

@@ -1,4 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class AdminWelcome extends Component {
   constructor() {
@@ -10,7 +12,9 @@ class AdminWelcome extends Component {
       <div className="admin-page-container">
         <h1>Welcome Admin!</h1>
         <div className="admin-page-nav-buttons">
-          <button type="submit">View All Products</button>
+          <Link to="/admin/albums">
+            <button type="submit">View All Products</button>
+          </Link>
           <button type="submit">View All Users</button>
         </div>
       </div>
