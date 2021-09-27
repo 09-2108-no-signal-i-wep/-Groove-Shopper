@@ -30,8 +30,8 @@ const Album = db.define("album", {
   },
   cover: {
     type: TEXT,
-    allowNull: false,
-    validate: { notEmpty: true },
+    defaultValue:
+      "https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/514dc845-04f5-4538-8a4f-869b64243265/1-2.jpg",
   },
 });
 

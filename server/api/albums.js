@@ -1,5 +1,6 @@
 const albumRouter = require("express").Router();
 
+const { artists } = require("../../seedData");
 const {
   models: { Album, Artist },
 } = require("../db");
@@ -32,24 +33,44 @@ albumRouter.get("/:albumId", async (req, res, next) => {
 
 /* *************** FOR ADMIN *************** */
 
-albumRouter.delete('/', async (req,res,next) => {
+albumRouter.delete("/", async (req, res, next) => {
   try {
     const toBeDeleted = await Album.findByPk(req.body.id);
     await toBeDeleted.destroy();
     res.send(toBeDeleted);
   } catch (error) {
-    console.log('DELETE ALBUM ERROR', error)
-    next(error)
+    console.log("DELETE ALBUM ERROR", error);
+    next(error);
   }
-})
+});
 
+albumRouter.post("/", async (req, res, next) => {
+  try {
+    // find artist by name
+    let artistSearch = await Artist.findOne({
+      where: {
+        name: req.body.name,
+      },
+    });
 
-// albumRouter.post('/', async(req, res, next) => {
-//   try {
-//     const newAlbum = await Album.create(req.body)
-//     res.json(newAlbum)
-//   } catch(error) {
-//     next(error)
-//   }})
+    // if !artist, make new artist
+    if (!artistSearch) {
+      artistSearch = await Artist.create({ name: req.body.name });
+      res.send(artistSearch);
+    }
+    //make new album and with artist Id coming from artist
+    const newAlbum = await Album.create({
+      title: req.body.title,
+      artistId: artistSearch.id,
+      price: req.body.price,
+      releaseYear: req.body.releaseYear,
+      // need to upload cover art
+    });
+
+    res.json(newAlbum);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = albumRouter;
