@@ -31,20 +31,39 @@ class SingleAlbum extends Component {
     this.setState({ quantity: value });
   }
 
+  // Ed's initial code
+  // addToGuestCart(albumId, quantity) {
+  //   const guestCart = window.localStorage;
+  //   const newAlbum = {...this.props.singleAlbum, quantity: quantity};
+
+  //   if (guestCart.length === 0) {
+  //     guestCart.setItem('CART', JSON.stringify([newAlbum]));
+  //     console.log('Created localstorage cart', JSON.parse(guestCart.getItem('CART')));
+  //   } else {
+  //     const guestCartAlbums = JSON.parse(guestCart.getItem('CART'));
+  //     const existingAlbum = guestCartAlbums.filter(album => album.id === albumId);
+
+  //     if (existingAlbum.length === 0) {
+  //       guestCart.setItem('CART', JSON.stringify([...guestCartAlbums, newAlbum]));
+  //       console.log('Updated localstorage cart with a new album', JSON.parse(guestCart.getItem('CART')));
+  //     }
+  //   }
+
   addToGuestCart(albumId, quantity) {
     const guestCart = window.localStorage;
     const newAlbum = {...this.props.singleAlbum, quantity: quantity};
 
-    if (guestCart.length === 0) {
+    if (!guestCart.getItem('CART')) {
       guestCart.setItem('CART', JSON.stringify([newAlbum]));
       console.log('Created localstorage cart', JSON.parse(guestCart.getItem('CART')));
     } else {
       const guestCartAlbums = JSON.parse(guestCart.getItem('CART'));
-      const existingAlbum = guestCartAlbums.filter(album => album.id === albumId);
+      const existingAlbum = guestCartAlbums.find(album => album.id === albumId);
 
-      if (existingAlbum.length === 0) {
+      if(existingAlbum) {
+        console.log('Found the album!') // Trying to change the quantity here
+      } else {
         guestCart.setItem('CART', JSON.stringify([...guestCartAlbums, newAlbum]));
-        console.log('Updated localstorage cart with a new album', JSON.parse(guestCart.getItem('CART')));
       }
     }
   }

@@ -1,26 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { fetchAlbums } from "../redux/albums";
-import Button from "@mui/material/Button";
-
 import { Link } from "react-router-dom";
 
 
 class AllAlbums extends Component {
   constructor(props) {
     super(props);
-
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
       this.props.getAlbums();
   }
-
-
-  handleClick(event) {}
-
 
   render() {
     console.log(this.props);
@@ -40,8 +31,8 @@ class AllAlbums extends Component {
             );
           })}
         </div>
-
       </div>
+
     );
   }
 }

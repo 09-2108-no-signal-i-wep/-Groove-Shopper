@@ -27,6 +27,7 @@ class Cart extends Component {
       let localCart = localStorage.getItem('CART');
       if(!localCart){
         let cartArr = [];
+        console.log('cart created here')
         localStorage.setItem('CART', JSON.stringify(cartArr));
       } else {
         const guestUser = JSON.parse(localStorage.getItem('CART'));
