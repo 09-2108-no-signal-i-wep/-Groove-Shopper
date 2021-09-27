@@ -24,8 +24,15 @@ class Cart extends Component {
     if (this.props.isLoggedIn) {
       this.props.fetchAlbums(this.props.match.params.userId); // added component did mount function
     } else {
-      const guestUser = JSON.parse(window.localStorage.getItem('CART'));
-      this.setState({ albums: guestUser });
+      let localCart = localStorage.getItem('CART');
+      if(!localCart){
+        let cartArr = [];
+        localStorage.setItem('CART', JSON.stringify(cartArr));
+      } else {
+        const guestUser = JSON.parse(localStorage.getItem('CART'));
+        console.log('guest user', guestUser)
+        this.setState({ albums: guestUser });
+      }
     }
   }
 
@@ -52,6 +59,17 @@ class Cart extends Component {
     const albums = this.props.isLoggedIn ? this.props.cart[0] : this.state.albums;
     console.log("albums", albums);
     const invoiceTotal = this.calculateCartTotal(albums);
+
+    let localCart = localStorage.getItem('CART');
+
+    if(!this.props.isLoggedIn && !localCart){
+      return (
+       <div>
+         <h1>Your Cart is Empty!</h1>
+       </div>
+
+      )
+    }
 
     return (
       <div className="cart-container">
