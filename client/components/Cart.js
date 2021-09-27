@@ -64,9 +64,9 @@ class Cart extends Component {
 
     if(!this.props.isLoggedIn && !localCart){
       return (
-       <div>
-         <h1>Your Cart is Empty!</h1>
-       </div>
+      <div>
+        <h1>Your Cart is Empty!</h1>
+      </div>
 
       )
     }
