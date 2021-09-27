@@ -30,9 +30,10 @@ export const me = () => async dispatch => {
 
 export const authLogin = (email, password) => async dispatch => {
   try {
+    console.log('hit login', email, password)
     const res = await axios.post(`/auth/login`, {email, password});
     window.localStorage.setItem(TOKEN, res.data.token);
-    dispatch(getUser(res.data));
+    dispatch(me());
   } catch (authError) {
     return dispatch(setAuth({error: authError}))
   }
@@ -40,9 +41,10 @@ export const authLogin = (email, password) => async dispatch => {
 
 export const authSignup = (email, password, firstName, lastName) => async dispatch => {
   try {
+    console.log('hit signup', email, password, firstName, lastName)
     const res = await axios.post(`/auth/signup`, {email, password, firstName, lastName});
     window.localStorage.setItem(TOKEN, res.data.token);
-    dispatch(getUser(res.data));
+    dispatch(me());
   } catch (authError) {
     return dispatch(setAuth({error: authError}))
   }

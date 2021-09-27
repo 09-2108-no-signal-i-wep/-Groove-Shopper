@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import AuthForm from "./components/AuthForm";
+import {Login, Signup} from "./components/AuthForm";
 import Home from "./components/Home";
 import AllAlbums from "./components/AllAlbums";
 import { me } from "./store";
@@ -39,7 +39,8 @@ class Routes extends Component {
 
             <Route path="/albums/:albumId" component={SingleAlbum} />
 
-            <Route path="/login" component={AuthForm} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
           </Switch>
         )}
       </div>
