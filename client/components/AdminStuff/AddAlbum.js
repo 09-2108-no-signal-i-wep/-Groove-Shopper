@@ -23,7 +23,7 @@ class AddAlbum extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.createAlbum({ ...this.staet });
+    this.props.createAlbum({ ...this.state });
     this.setState({
       title: "",
       artistName: "",
