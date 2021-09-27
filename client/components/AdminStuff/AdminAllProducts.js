@@ -15,21 +15,23 @@ class AdminAllProducts extends Component {
   }
 
   deleteButton(albumId) {
-    console.log(albumId)
+    console.log(albumId);
     this.props.deleteAlbum(albumId);
   }
 
   // JSX to HTML
   render() {
-    const {deleteButton} = this;
-    console.log(this.props.albums)
+    const { deleteButton } = this;
+    console.log(this.props.albums);
     return (
       <div className="all-albums">
         <h1>All Albums</h1>
         {this.props.albums.map((album) => {
           return (
             <div key={album.id}>
-              <button type="submit" onClick={() => deleteButton(album.id)}>X</button>
+              <button type="submit" onClick={() => deleteButton(album.id)}>
+                X
+              </button>
               <img src={album.cover} className="all-albums-cover" />
               <p>{album.title}</p>
               <button type="submit">Update...</button>

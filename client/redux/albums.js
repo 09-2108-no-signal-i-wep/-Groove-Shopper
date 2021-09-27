@@ -11,6 +11,7 @@ export const gotAlbums = (albums) => ({
 });
 
 const removeAlbum = (album) => {
+  console.log("ashshsh", album);
   return {
     type: REMOVE_ALBUM,
     album,
@@ -31,9 +32,9 @@ export const deleteAlbum = (albumId) => {
   return async (dispatch) => {
     try {
       const { data: toBeDeletedAlbum } = await axios.delete("/api/albums", {
-        data: { albumId }, // might need ot check this line
+        data: { id: albumId }, // might need ot check this line
       });
-      console.log(toBeDeletedAlbum);
+
       dispatch(removeAlbum(toBeDeletedAlbum));
     } catch (error) {
       console.log("delete album thunk error", error);
@@ -47,9 +48,7 @@ export default function albumsReducer(state = [], action) {
     case GOT_ALL_ALBUMS:
       return action.albums;
     case REMOVE_ALBUM: {
-      return state.filter(
-        (oldAlbum) => oldAlbum.albumId !== action.album.albumId
-      );
+      return state.filter((oldAlbum) => oldAlbum.id !== action.album.id);
     }
     default:
       return state;
