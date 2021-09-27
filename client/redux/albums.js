@@ -1,8 +1,10 @@
+import { typeParameterDeclaration } from "@babel/types";
 import axios from "axios";
 
 // Action types
 const GOT_ALL_ALBUMS = "GOT_ALL_ALBUMS";
 const REMOVE_ALBUM = "REMOVE_ALBUM";
+const ADD_ALBUM = "ADD_ALBUM";
 
 // Action creators
 export const gotAlbums = (albums) => ({
@@ -11,9 +13,15 @@ export const gotAlbums = (albums) => ({
 });
 
 const removeAlbum = (album) => {
-  console.log("ashshsh", album);
   return {
     type: REMOVE_ALBUM,
+    album,
+  };
+};
+
+const addAlbum = (album) => {
+  return {
+    type: ADD_ALBUM,
     album,
   };
 };
@@ -42,6 +50,17 @@ export const deleteAlbum = (albumId) => {
   };
 };
 
+export const createAlbum = (album) => {
+  return async (dispatch) => {
+    try {
+      const { data: newAlbum } = await axios.post("/api/albums", album);
+      dispatch(addAlbum(newAlbum));
+    } catch (error) {
+      console.log("ADD album thunk error", error);
+    }
+  };
+};
+
 // Reducers
 export default function albumsReducer(state = [], action) {
   switch (action.type) {
@@ -49,6 +68,9 @@ export default function albumsReducer(state = [], action) {
       return action.albums;
     case REMOVE_ALBUM: {
       return state.filter((oldAlbum) => oldAlbum.id !== action.album.id);
+    }
+    case ADD_ALBUM: {
+      return [...state, action.album];
     }
     default:
       return state;

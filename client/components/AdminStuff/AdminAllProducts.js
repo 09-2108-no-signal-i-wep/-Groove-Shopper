@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { deleteAlbum, fetchAlbums } from "../../redux/albums";
+import AddAlbum from "./AddAlbum";
 
 // AllAlbums component
 class AdminAllProducts extends Component {
@@ -11,6 +12,7 @@ class AdminAllProducts extends Component {
 
   // Mounts to tree, loads data
   componentDidMount() {
+    console.log("mounting...");
     this.props.fetchAlbums();
   }
 
@@ -24,20 +26,23 @@ class AdminAllProducts extends Component {
     const { deleteButton } = this;
     console.log(this.props.albums);
     return (
-      <div className="all-albums">
-        <h1>All Albums</h1>
-        {this.props.albums.map((album) => {
-          return (
-            <div key={album.id}>
-              <button type="submit" onClick={() => deleteButton(album.id)}>
-                X
-              </button>
-              <img src={album.cover} className="all-albums-cover" />
-              <p>{album.title}</p>
-              <button type="submit">Update...</button>
-            </div>
-          );
-        })}
+      <div>
+        {/* <AddAlbum /> */}
+        <div className="all-albums">
+          <h1>All Albums</h1>
+          {this.props.albums.map((album) => {
+            return (
+              <div key={album.id}>
+                <button type="submit" onClick={() => deleteButton(album.id)}>
+                  X
+                </button>
+                <img src={album.cover} className="all-albums-cover" />
+                <p>{album.title}</p>
+                <button type="submit">Update...</button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
