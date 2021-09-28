@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+// eslint-disable-next-line no-unused-vars
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import {Login, Signup} from "./components/AuthForm";
+import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import AllAlbums from "./components/AllAlbums";
 import { me } from "./store";
@@ -10,7 +11,11 @@ import Cart from "./components/Cart";
 import Confirmation from "./components/Confirmation";
 
 import SingleAlbum from "./components/SingleAlbum";
-
+import AdminWelcome from "./components/Admin-Components/AdminWelcome";
+import AdminAllAlbums from "./components/Admin-Components/AdminAllAlbums";
+import AdminSingleAlbum from "./components/Admin-Components/AdminSingleAlbum";
+import AdminAllUsers from "./components/Admin-Components/AdminAllUsers";
+import AdminSingleUser from "./components/Admin-Components/AdminSingleUser";
 
 /**
  * COMPONENT
@@ -40,7 +45,25 @@ class Routes extends Component {
             <Route path="/albums/:albumId" component={SingleAlbum} />
 
             <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
+
+            {/* admin stuff */}
+            <Route exact path="/admin" component={AdminWelcome} />
+            <Route exact path="/admin/albums" component={AdminAllAlbums} />
+            <Route
+              exact
+              path="/admin/albums/:albumId"
+              component={AdminSingleAlbum}
+            />
+
+            <Route
+              exact
+              path="/admin/users/:userId"
+              component={AdminSingleUser}
+            />
+            <Route exact path="/admin/users" component={AdminAllUsers} />
+
+            {/* {/* <Route path='/' exact component={ Login } />
+            <Route path="/login" component={Login} /> */}
           </Switch>
         )}
       </div>
