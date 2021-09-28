@@ -45,7 +45,7 @@ class AdminAllUsers extends Component {
                     id="userImage"
                     src="https://cdn.w600.comps.canstockphoto.com/user-with-headphone-music-simple-vector-clip-art-vector_csp72867467.jpg"
                   />
-                  <h4>{`${user.firstName} ${user.lastName}`}</h4>
+                  <h3>{`${user.firstName} ${user.lastName}`}</h3>
                 </Link>
               </div>
             );

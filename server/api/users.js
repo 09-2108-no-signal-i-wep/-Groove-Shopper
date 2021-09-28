@@ -27,13 +27,22 @@ userRouter.delete("/", async (req, res, next) => {
   }
 });
 
-
 userRouter.get("/:userId", async (req, res, next) => {
   try {
     const singleUser = await User.findByPk(req.params.userId, {
       attributes: ["id", "firstName", "lastName", "email", "isAdmin"],
     });
     res.send(singleUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.put("/:userId", async (req, res, next) => {
+  try {
+    const updateUserAdmin = await User.findByPk(req.params.userId);
+    await updateUserAdmin.update(req.body);
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

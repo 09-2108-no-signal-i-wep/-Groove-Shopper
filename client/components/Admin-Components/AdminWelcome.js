@@ -16,7 +16,9 @@ class AdminWelcome extends Component {
           <Link to="/admin/albums">
             <button type="submit">View All Products</button>
           </Link>
-          <button type="submit">View All Users</button>
+          <Link to="/admin/users">
+            <button type="submit">View All Users</button>
+          </Link>
         </div>
       </div>
     );

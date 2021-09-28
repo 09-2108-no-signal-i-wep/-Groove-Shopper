@@ -10,24 +10,22 @@ const getSingleUser = (user) => {
   };
 };
 
-// const updateSingleUser = (user) => {
-//   return {
-//     type: UPDATE_USER,
-//     user,
-//   };
-// };
+const updateSingleUser = (user) => {
+  return {
+    type: UPDATE_USER,
+    user,
+  };
+};
 
 // thunks
 
 const fetchSingleUser = (userId) => {
   return async (dispatch) => {
     try {
-      console.log('s', userId)
       const { data: singleUser } = await axios.get(
         `/api/admin/users/${userId}`
       );
 
-      console.log('ahh', singleUser)
       dispatch(getSingleUser(singleUser));
     } catch (error) {
       return `Error ${error.message}|| fetch single user`;
@@ -35,7 +33,18 @@ const fetchSingleUser = (userId) => {
   };
 };
 
-
+const updateUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const user = await axios.put(`/api/admin/users/${userId}`, {
+        isAdmin: !user.isAdmin,
+      });
+      dispatch(updateSingleUser(user));
+    } catch (error) {
+      return `Error ${error.message}`;
+    }
+  };
+};
 
 const singleUserReducer = (state = {}, action) => {
   switch (action.type) {
@@ -48,5 +57,5 @@ const singleUserReducer = (state = {}, action) => {
   }
 };
 
-export { fetchSingleUser };
+export { fetchSingleUser, updateUser };
 export default singleUserReducer;

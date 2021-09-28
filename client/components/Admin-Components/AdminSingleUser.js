@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchSingleUser } from "../../redux/singleUser";
+import IsAdmin from "./IsAdmin";
 
 /// Single User
 
@@ -11,18 +12,23 @@ class AdminSingleUser extends Component {
 
   componentDidMount() {
     console.log("*** COMPONENT MOUNTING *****");
-    console.log(this.props.match.params.userId)
     this.props.fetchSingleUser(this.props.match.params.userId);
   }
 
   render() {
-    console.log(this.props);
+    console.log("pproppy", this.props);
+    const { firstName, lastName, email, isAdmin, id } = this.props.singleUser;
     // if (artist === undefined) {
     //   return <h1>LOADING</h1>;
     // } else {
-    return (<div className="single-user-container">
-      <h2>Name</h2>
-    </div>);
+    return (
+      <div className="single-user-container">
+        <h2>{`${firstName} ${lastName}`}</h2>
+        <img src="https://cdn.w600.comps.canstockphoto.com/user-with-headphone-music-simple-vector-clip-art-vector_csp72867467.jpg" />
+        <h3>{email}</h3>
+        <IsAdmin isAdmin={isAdmin} userId={id} />
+      </div>
+    );
     //}
   }
 }
