@@ -47,7 +47,6 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(this.props)
     const albums = this.props.isLoggedIn ? this.props.cart.albums : JSON.parse(window.localStorage.getItem('CART'));
     console.log(albums)
 
