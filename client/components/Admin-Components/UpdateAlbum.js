@@ -1,13 +1,16 @@
+// eslint-disable-next-line no-unused-vars
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { updateSingleAlbum } from "../../redux/singleAlbum";
 
 class UpdateAlbum extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.title,
-      artistName: this.props.artistName,
-      price: this.props.price,
-      releaseYear: this.props.releaseYear,
+      title: "",
+      artistName: "",
+      price: "",
+      releaseYear: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,16 +24,18 @@ class UpdateAlbum extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.createAlbum({ ...this.state });
+    this.props.updateAlbum({ ...this.state }, this.props.singleAlbum.id);
+
     this.setState({
-      title: this.props.title,
-      artistName: this.props.artistName,
-      price: this.props.price,
-      releaseYear: this.props.releaseYear,
+      title: "",
+      artistName: "",
+      price: "",
+      releaseYear: "",
     });
   }
 
   render() {
+    console.log(this.props);
     const { title, artistName, price, releaseYear } = this.state;
     const { handleChange, handleSubmit } = this;
     return (
@@ -88,4 +93,17 @@ class UpdateAlbum extends Component {
   }
 }
 
-export default UpdateAlbum;
+const mapState = (state) => {
+  return {
+    singleAlbum: state.singleAlbum,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    updateAlbum: (album, albumId) =>
+      dispatch(updateSingleAlbum(album, albumId)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(UpdateAlbum);

@@ -34,6 +34,7 @@ const fetchSingleAlbum = (albumId) => {
 const updateSingleAlbum = (album, albumId) => {
   return async (dispatch) => {
     try {
+      console.log('aslbums thunk', album)
       const { data: updatedAlbum } = await axios.put(
         `/api/albums/${albumId}`,
         album
