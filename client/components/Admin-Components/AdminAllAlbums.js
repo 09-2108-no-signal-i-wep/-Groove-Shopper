@@ -37,7 +37,6 @@ class AdminAllAlbums extends Component {
                 </button>
                 <img src={album.cover} className="all-albums-cover" />
                 <p>{album.title}</p>
-                <button type="submit">Update...</button>
               </div>
             );
           })}

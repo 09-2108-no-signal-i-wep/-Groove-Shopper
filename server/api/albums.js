@@ -81,4 +81,14 @@ albumRouter.post("/", async (req, res, next) => {
   }
 });
 
+albumRouter.put("/:albumId", async (req, res, next) => {
+  try {
+    const albumId = req.params.albumId;
+    const updatedAlbum = await Album.findByPk(albumId);
+    res.send(await updatedAlbum.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = albumRouter;
