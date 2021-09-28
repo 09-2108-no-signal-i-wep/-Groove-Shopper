@@ -96,7 +96,7 @@ export default function albumsReducer(state = [], action) {
     case ADD_ALBUM_TO_CART:
       return { state: [...state, action.cart] }; // Look back later
     case REMOVE_ALBUM:
-      return state.filter(album => album.id !== action.album.id);
+      return state.filter((album) => album.id !== action.album.id);
     default:
       return state;
   }

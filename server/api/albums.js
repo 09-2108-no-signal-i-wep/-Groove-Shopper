@@ -46,16 +46,20 @@ albumRouter.delete("/", async (req, res, next) => {
 albumRouter.post("/", async (req, res, next) => {
   try {
     // find artist by name
+    let createArtist = false;
+    console.log("reeq body", req.body);
     let artistSearch = await Artist.findOne({
       where: {
-        name: req.body.name,
+        name: req.body.artistName,
       },
     });
 
+    console.log("artistSEeache", artistSearch);
+
     // if !artist, make new artist
     if (!artistSearch) {
-      artistSearch = await Artist.create({ name: req.body.name });
-      res.send(artistSearch);
+      artistSearch = await Artist.create({ name: req.body.artistName });
+      createArtist = true;
     }
     //make new album and with artist Id coming from artist
     const newAlbum = await Album.create({
@@ -66,7 +70,12 @@ albumRouter.post("/", async (req, res, next) => {
       // need to upload cover art
     });
 
-    res.json(newAlbum);
+    console.log("new album", newAlbum);
+    if (createArtist) {
+      res.send({ artistSearch, newAlbum });
+    } else {
+      res.send(newAlbum);
+    }
   } catch (error) {
     next(error);
   }
