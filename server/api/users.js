@@ -1,6 +1,6 @@
 const router = require('express').Router();
-
 const { models: { User } } = require('../db');
+const { requireToken } = require('./userMiddleware');
 
 // Path: /api/users
 router.get('/', async (req, res, next) => {

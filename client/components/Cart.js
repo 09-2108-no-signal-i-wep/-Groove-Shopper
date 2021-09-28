@@ -14,15 +14,12 @@ import { Zoom } from "@mui/material";
 class Cart extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      albums: [],
-    }
     this.removeAlbum = this.removeAlbum.bind(this);
   }
 
   componentDidMount() {
     if (this.props.isLoggedIn) {
-      this.props.fetchAlbums(this.props.match.params.userId); // added component did mount function
+      this.props.fetchAlbums(this.props.userId); // added component did mount function
     } else {
       const guestUser = JSON.parse(window.localStorage.getItem('CART'));
       this.setState({ albums: guestUser });
@@ -37,22 +34,27 @@ class Cart extends Component {
     return albums.map(({ price, quantity }) => price * quantity).reduce((sum, i) => sum + i, 0);
   }
 
-  removeAlbum(albumId) {
+  removeAlbum(albumId, orderId) {
     if (this.props.isLoggedIn) {
-      this.props.removeAlbum(albumId);
+      this.props.removeAlbums(albumId, orderId);
     } else {
-      const updatedAlbums = this.state.albums.filter(album => album.id !== albumId);
+      const guestAlbums = JSON.parse(window.localStorage.getItem('CART'));
+      const updatedAlbums = guestAlbums.filter(album => album.id !== albumId);
       window.localStorage.setItem('CART', JSON.stringify(updatedAlbums));
-      console.log('Removed an album from localstorage cart', JSON.parse(window.localStorage.getItem('CART')));
+      console.log('Removed an album from localstorage cart', JSON.parse(guestAlbums));
       this.setState({ albums: updatedAlbums});
     }
   }
 
   render() {
-    const albums = this.props.isLoggedIn ? this.props.cart[0] : this.state.albums;
-    console.log("albums", albums);
-    const invoiceTotal = this.calculateCartTotal(albums);
+    console.log(this.props)
+    const albums = this.props.isLoggedIn ? this.props.cart.albums : JSON.parse(window.localStorage.getItem('CART'));
+    console.log(albums)
 
+    if (!albums || albums.length === 0) {
+      return <><h1 className="cart-title">Shopping Cart</h1><h1>EMPTY</h1></>;
+    } else {
+      const invoiceTotal = this.calculateCartTotal(albums);
     return (
       <div className="cart-container">
         <h1 className="cart-title">Shopping Cart</h1>
@@ -78,7 +80,8 @@ class Cart extends Component {
                     <img id='cart-img' src={product.cover} />
                   </TableCell>
                   <TableCell >{product.title}</TableCell>
-                  <TableCell >{product.artist.name}</TableCell>
+                  {/* TODO: add artist to product */}
+                  {/* <TableCell >{product.artist.name}</TableCell> */}
                   <TableCell align="right">{product.quantity}</TableCell>
                   <TableCell align="right">${this.fixPrice(product.price * product.quantity)}</TableCell>
                   <TableCell align="right">
@@ -102,10 +105,11 @@ class Cart extends Component {
         </div>
       </div>
     );
+              }
   }
 }
 
-const mapState = (state) => ({ albums: state.albums, isLoggedIn: !!state.userId });
+const mapState = (state) => ({ cart: state.cart, userId: state.auth.id, isLoggedIn: !!state.auth.id });
 
 const mapDispatch = (dispatch) => ({
   fetchAlbums: (userId) => dispatch(fetchAlbumsInCart(userId)),

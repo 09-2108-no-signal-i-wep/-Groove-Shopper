@@ -3,12 +3,12 @@ const cart = require("express").Router();
 const {
   models: { Album, Order },
 } = require("../db");
-
 const OrderAlbum = require("../db/models/OrderAlbum");
+const { requireToken } = require('./userMiddleware');
 
-// Path: /api/cart/:userId
-cart.get("/:userId", (req, res, next) => {
-  Order.findAll({
+// Path: /api/cart/user
+cart.get("/user/:userId", (req, res, next) => {
+  Order.findOne({
     where: {
       userId: req.params.userId,
       isCart: true,
@@ -23,32 +23,36 @@ cart.get("/:userId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-// POST /api/cart/:userId - ADD TO CART. This creates a new set of ORDER-Album (Details)
+// POST /api/cart/add - ADD TO CART. This creates a new set of ORDER-Album (Details)
 
-cart.post("/:userId", async (req, res, next) => {
+cart.post("/add", async (req, res, next) => {
   try {
-    const { userId } = req.params;
-    const { albumId, cost, quantity } = req.body;
+    const { albumId, quantity, cost, userId } = req.body;
 
-    const userOrder = await Order.findOne({
+    const userOrder = await Order.findOrCreate({
       where: {
         userId: userId,
         isCart: true,
       },
+      defaults: {
+        total: 0
+      }
+    });
+
+    await OrderAlbum.create({
+      orderId: userOrder[0].id,
+      albumId: albumId,
+      quantity: quantity,
+      cost: cost,
     });
 
     const newOrderDetail = await OrderAlbum.findOne({
       where: {
-        orderId: userOrder.id,
-        albumId: albumId,
+        orderId: userOrder[0].id,
       },
     });
 
-    newOrderDetail.quantity = quantity;
-    newOrderDetail.cost = cost * quantity;
-    await newOrderDetail.save();
-    res.send(userOrder);
-
+    res.send(newOrderDetail);
   } catch (error) {
     console.log("cart POST error");
     next(error);
@@ -79,12 +83,14 @@ cart.put("/:userId", async (req, res, next) => {
 });
 
 // PUT /api/cart/:userId -- deletes an album in the cart
-cart.put("/:userId", async (req, res, next) => {
+cart.delete("/remove/:albumId", requireToken, async (req, res, next) => {
   try {
+    const { albumId } = req.params;
+
     // find the order based on userId where cart is true;
     const userOrder = await Order.findOne({
       where: {
-        userId: req.params.userId,
+        userId: req.user.id,
         isCart: true,
       },
     });
@@ -92,7 +98,7 @@ cart.put("/:userId", async (req, res, next) => {
     const deleteSingleOrderAlbum = await OrderAlbum.findOne({
       where: {
         orderId: userOrder.id,
-        albumId: req.body.id,
+        albumId: albumId,
       },
     });
 
@@ -112,11 +118,11 @@ cart.put("/:userId", async (req, res, next) => {
 });
 
 // PUT /api/cart/:userid/checkout -- Changes order from cart to completed
-cart.put("/:userid/checkout", async (req, res, next) => {
+cart.put("/:userid/checkout", requireToken, async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
       where: {
-        userId: req.params.userId,
+        userId: req.user.Id,
         isCart: true,
       },
     });

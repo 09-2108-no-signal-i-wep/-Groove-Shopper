@@ -28,15 +28,18 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/albums" component={AllAlbums} />
-
             <Route path="/cart" component={Cart} />
             <Route path="/confirmed/:orderId" component={Confirmation} />
 
+            <Route exact path="/albums" component={AllAlbums} />
+            <Route path="/albums/:albumId" component={SingleAlbum} />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/cart" component={Cart} />
+            <Route path="/confirmed/:orderId" component={Confirmation} />
+
+            <Route exact path="/albums" component={AllAlbums} />
             <Route path="/albums/:albumId" component={SingleAlbum} />
 
             <Route path="/signup" component={Signup} />

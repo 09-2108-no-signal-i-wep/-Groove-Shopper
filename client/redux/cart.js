@@ -9,9 +9,9 @@ export const getCart = cart => ({
   cart,
 });
 
-export const addAlbums = album => ({
+export const addAlbums = albums => ({
   type: ADD_ALBUMS,
-  album,
+  albums,
 });
 
 export const removeAlbums = album => ({
@@ -21,20 +21,22 @@ export const removeAlbums = album => ({
 
 export const fetchAlbumsInCart = (userId) => async (dispatch) => {
   try {
-    const { data: userAlbums } = await axios.get(`/api/cart/${userId}`);
-    dispatch(getCart(userAlbums));
+    const { data } = await axios.get(`/api/cart/user/${userId}`);
+    dispatch(getCart(data));
   } catch (error) {
     return `Error: ${error.message} || fetchAlbumsInCart`;
   }
 };
 
-export const addAlbumsToCart = (albumId, quantity) => async (dispatch) => {
+export const addAlbumsToCart = (album) => async (dispatch) => {
   try {
-    const { data: userAlbums } = await axios.post(`/api/cart/${userId}`, {
-      albumId: albumId,
-      quantity: quantity
+    const { data } = await axios.post(`/api/cart/add`, {
+      albumId: album.id,
+      quantity: album.quantity,
+      cost: album.cost,
+      userId: album.userId
     });
-    dispatch(getCart(userAlbums))
+    dispatch(addAlbums(data))
   } catch (error) {
     return `Error: ${error.message} || addAlbumsToCart`;
   }
@@ -42,8 +44,8 @@ export const addAlbumsToCart = (albumId, quantity) => async (dispatch) => {
 
 export const removeAlbumsFromCart = (albumId) => async (dispatch) => {
   try {
-    await axios.delete('/api/cart', { data: { albumId: albumId}});
-    dispatch(getCart());
+    await axios.delete(`/api/cart/remove/${albumId}`);
+    dispatch(removeAlbums());
   } catch (error) {
     return `Error: ${error.message} || removeAlbumsFromCart`;
   }
@@ -54,7 +56,7 @@ export default function cartReducer(state = [], action) {
     case GET_CART:
       return action.cart;
     case ADD_ALBUMS:
-      return [...state, action.album];
+      return action.albums;
     case REMOVE_ALBUMS:
       return {...state, albums: state.filter(album => album.id !== action.albumId)};
     default:

@@ -50,8 +50,14 @@ class SingleAlbum extends Component {
   }
 
   handleAdd = () => {
+    const newAlbum = {
+      id: this.props.singleAlbum.id,
+      quantity: this.state.quantity,
+      cost: this.props.singleAlbum.price
+    }
+
     if (this.props.isLoggedIn) {
-      this.props.addAlbums(this.props.singleAlbum.id, this.state.quantity)
+      this.props.addAlbums({ ...newAlbum, userId: this.props.userId });
     } else {
       this.addToGuestCart(this.props.singleAlbum.id, this.state.quantity)
     }
@@ -98,9 +104,11 @@ class SingleAlbum extends Component {
 }
 
 const mapState = (state) => {
+  console.log(state)
   return {
     singleAlbum: state.singleAlbum,
-    isLoggedIn: !!state.userId
+    userId: state.auth.id,
+    isLoggedIn: !!state.auth.id
   };
 };
 
