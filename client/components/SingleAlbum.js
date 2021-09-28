@@ -31,39 +31,25 @@ class SingleAlbum extends Component {
     this.setState({ quantity: value });
   }
 
-  // Ed's initial code
-  // addToGuestCart(albumId, quantity) {
-  //   const guestCart = window.localStorage;
-  //   const newAlbum = {...this.props.singleAlbum, quantity: quantity};
-
-  //   if (guestCart.length === 0) {
-  //     guestCart.setItem('CART', JSON.stringify([newAlbum]));
-  //     console.log('Created localstorage cart', JSON.parse(guestCart.getItem('CART')));
-  //   } else {
-  //     const guestCartAlbums = JSON.parse(guestCart.getItem('CART'));
-  //     const existingAlbum = guestCartAlbums.filter(album => album.id === albumId);
-
-  //     if (existingAlbum.length === 0) {
-  //       guestCart.setItem('CART', JSON.stringify([...guestCartAlbums, newAlbum]));
-  //       console.log('Updated localstorage cart with a new album', JSON.parse(guestCart.getItem('CART')));
-  //     }
-  //   }
-
   addToGuestCart(albumId, quantity) {
     const guestCart = window.localStorage;
     const newAlbum = {...this.props.singleAlbum, quantity: quantity};
 
     if (!guestCart.getItem('CART')) {
       guestCart.setItem('CART', JSON.stringify([newAlbum]));
-      console.log('Created localstorage cart', JSON.parse(guestCart.getItem('CART')));
+      console.log('Created local storage cart', JSON.parse(guestCart.getItem('CART')));
     } else {
       const guestCartAlbums = JSON.parse(guestCart.getItem('CART'));
       const existingAlbum = guestCartAlbums.find(album => album.id === albumId);
 
-      if(existingAlbum) {
-        console.log('Found the album!') // Trying to change the quantity here
+      if (existingAlbum) {
+        existingAlbum.quantity = quantity;
+        guestCart.setItem('CART', JSON.stringify(guestCartAlbums, existingAlbum));
+        console.log('Quantity of existing album is changed in local storage');
       } else {
-        guestCart.setItem('CART', JSON.stringify([...guestCartAlbums, newAlbum]));
+        guestCartAlbums.push(newAlbum)
+        guestCart.setItem('CART', JSON.stringify(guestCartAlbums));
+        console.log('Updated local storage cart with a new album', JSON.parse(guestCart.getItem('CART')));
       }
     }
   }
