@@ -1,10 +1,10 @@
 const cart = require("express").Router();
 
 const {
-  models: { Album, Order },
+  models: { Album, Order, Artist },
 } = require("../db");
 const OrderAlbum = require("../db/models/OrderAlbum");
-const { requireToken } = require('./userMiddleware');
+const { requireToken } = require("./userMiddleware");
 
 // Path: /api/cart/user
 cart.get("/user/:userId", (req, res, next) => {
@@ -16,6 +16,7 @@ cart.get("/user/:userId", (req, res, next) => {
     include: [
       {
         model: Album,
+        include: [Artist],
       },
     ],
   })
@@ -27,6 +28,7 @@ cart.get("/user/:userId", (req, res, next) => {
 
 cart.post("/add", async (req, res, next) => {
   try {
+    console.log("boddy", req.body);
     const { albumId, quantity, cost, userId } = req.body;
 
     const userOrder = await Order.findOrCreate({
@@ -35,8 +37,8 @@ cart.post("/add", async (req, res, next) => {
         isCart: true,
       },
       defaults: {
-        total: 0
-      }
+        total: 0,
+      },
     });
 
     await OrderAlbum.create({
@@ -51,6 +53,8 @@ cart.post("/add", async (req, res, next) => {
         orderId: userOrder[0].id,
       },
     });
+
+    console.log("nnew new", newOrderDetail);
 
     res.send(newOrderDetail);
   } catch (error) {

@@ -80,7 +80,7 @@ class Cart extends Component {
                   </TableCell>
                   <TableCell >{product.title}</TableCell>
                   {/* TODO: add artist to product */}
-                  {/* <TableCell >{product.artist.name}</TableCell> */}
+                  <TableCell >{product.artist.name}</TableCell>
                   <TableCell align="right">{product.quantity}</TableCell>
                   <TableCell align="right">${this.fixPrice(product.price * product.quantity)}</TableCell>
                   <TableCell align="right">
