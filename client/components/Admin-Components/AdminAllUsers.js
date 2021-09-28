@@ -28,7 +28,7 @@ class AdminAllUsers extends Component {
   render() {
     const { deleteButton } = this;
     const { users } = this.props;
-    console.log("thispo", this.props);
+    console.log("thispo", this.props.users);
     return (
       <React.Fragment>
         <div className="allUsers-container">

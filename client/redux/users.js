@@ -33,10 +33,12 @@ const fetchAllUsers = () => {
 const deleteUser = (userId) => {
   return async (dispatch) => {
     try {
-      const { data: toBeDeleted } = await axios.delete("/admin/users", {
+      const { data: oldUser } = await axios.delete("/api/admin/users", {
         data: { id: userId },
       });
-      dispatch(removeUser(toBeDeleted));
+
+      console.log("gone", oldUser);
+      dispatch(removeUser(oldUser));
     } catch (error) {
       return `Error ${error.message} || delete User Thunk`;
     }
