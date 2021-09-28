@@ -15,6 +15,7 @@ import AdminWelcome from "./components/Admin-Components/AdminWelcome";
 import AdminAllAlbums from "./components/Admin-Components/AdminAllAlbums";
 import AdminSingleAlbum from "./components/Admin-Components/AdminSingleAlbum";
 import AdminAllUsers from "./components/Admin-Components/AdminAllUsers";
+import AdminSingleUser from "./components/Admin-Components/AdminSingleUser";
 
 /**
  * COMPONENT
@@ -54,6 +55,11 @@ class Routes extends Component {
               component={AdminSingleAlbum}
             />
 
+            <Route
+              exact
+              path="/admin/users/:userId"
+              component={AdminSingleUser}
+            />
             <Route exact path="/admin/users" component={AdminAllUsers} />
 
             {/* {/* <Route path='/' exact component={ Login } />

@@ -27,4 +27,16 @@ userRouter.delete("/", async (req, res, next) => {
   }
 });
 
+
+userRouter.get("/:userId", async (req, res, next) => {
+  try {
+    const singleUser = await User.findByPk(req.params.userId, {
+      attributes: ["id", "firstName", "lastName", "email", "isAdmin"],
+    });
+    res.send(singleUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = userRouter;

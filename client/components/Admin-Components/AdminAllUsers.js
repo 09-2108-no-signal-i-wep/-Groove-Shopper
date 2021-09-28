@@ -40,11 +40,13 @@ class AdminAllUsers extends Component {
                 <button type="submit" onClick={() => deleteButton(user.id)}>
                   X
                 </button>
-                <img
-                  id="userImage"
-                  src="https://cdn.w600.comps.canstockphoto.com/user-with-headphone-music-simple-vector-clip-art-vector_csp72867467.jpg"
-                />
-                <h4>{`${user.firstName} ${user.lastName}`}</h4>
+                <Link to={`/admin/users/${user.id}`}>
+                  <img
+                    id="userImage"
+                    src="https://cdn.w600.comps.canstockphoto.com/user-with-headphone-music-simple-vector-clip-art-vector_csp72867467.jpg"
+                  />
+                  <h4>{`${user.firstName} ${user.lastName}`}</h4>
+                </Link>
               </div>
             );
           })}
