@@ -13,6 +13,7 @@ import Confirmation from "./components/Confirmation";
 import SingleAlbum from "./components/SingleAlbum";
 import AdminWelcome from "./components/Admin-Components/AdminWelcome";
 import AdminAllAlbums from "./components/Admin-Components/AdminAllAlbums";
+import AdminSingleAlbum from "./components/Admin-Components/AdminSingleAlbum";
 
 /**
  * COMPONENT
@@ -43,7 +44,12 @@ class Routes extends Component {
 
             <Route path="/signup" component={Signup} />
             <Route exact path="/admin" component={AdminWelcome} />
-            <Route path="/admin/albums" component={AdminAllAlbums} />
+            <Route exact path="/admin/albums" component={AdminAllAlbums} />
+            <Route
+              exact
+              path="/admin/albums/:albumId"
+              component={AdminSingleAlbum}
+            />
 
             {/* {/* <Route path='/' exact component={ Login } />
             <Route path="/login" component={Login} /> */}

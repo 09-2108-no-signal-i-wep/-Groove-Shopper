@@ -34,52 +34,52 @@ class UpdateAlbum extends Component {
     const { title, artistName, price, releaseYear } = this.state;
     const { handleChange, handleSubmit } = this;
     return (
-      <div className="add-album-container">
-        <h1>Add New Album</h1>
-        <div className="add-album-form">
+      <div className="update-album-container">
+        <h1>Update Album...</h1>
+        <div className="update-album-form">
           <form onSubmit={handleSubmit}>
-            <label className="add-album-text" htmlFor="title">
+            <label className="update-album-text" htmlFor="title">
               Album Title
             </label>
             <input
-              className="add-album-input"
+              className="update-album-input"
               onChange={handleChange}
               name="title"
               value={title}
             />
 
-            <label className="add-album-text" htmlFor="artistName">
+            <label className="update-album-text" htmlFor="artistName">
               Artist
             </label>
             <input
-              className="add-album-input"
+              className="update-album-input"
               onChange={handleChange}
               name="artistName"
               value={artistName}
             />
 
-            <label className="add-album-text" htmlFor="price">
+            <label className="update-album-text" htmlFor="price">
               Price
             </label>
             <input
-              className="add-album-input"
+              className="update-album-input"
               onChange={handleChange}
               name="price"
               value={price}
             />
 
-            <label className="add-album-text" htmlFor="releaseYear">
+            <label className="update-album-text" htmlFor="releaseYear">
               Release Year
             </label>
             <input
-              className="add-album-input"
+              className="update-album-input"
               onChange={handleChange}
               name="releaseYear"
               value={releaseYear}
             />
 
-            <button className="add-album-submit" type="submit">
-              Add!
+            <button className="update-album-submit" type="submit">
+              Update
             </button>
           </form>
         </div>
@@ -87,3 +87,5 @@ class UpdateAlbum extends Component {
     );
   }
 }
+
+export default UpdateAlbum;

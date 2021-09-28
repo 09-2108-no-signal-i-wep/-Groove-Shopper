@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { deleteAlbum, fetchAlbums } from "../../redux/albums";
 import AddAlbum from "./AddAlbum";
+import { Link } from "react-router-dom";
 
 // AllAlbums component
 class AdminAllAlbums extends Component {
@@ -35,8 +36,10 @@ class AdminAllAlbums extends Component {
                 <button type="submit" onClick={() => deleteButton(album.id)}>
                   X
                 </button>
-                <img src={album.cover} className="all-albums-cover" />
-                <p>{album.title}</p>
+                <Link to={`/admin/albums/${album.id}`}>
+                  <img src={album.cover} className="all-albums-cover" />
+                  <p>{album.title}</p>
+                </Link>
               </div>
             );
           })}
