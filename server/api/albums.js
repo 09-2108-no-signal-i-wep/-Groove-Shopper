@@ -35,6 +35,7 @@ albumRouter.get("/:albumId", async (req, res, next) => {
 albumRouter.delete("/", async (req, res, next) => {
   try {
     const toBeDeleted = await Album.findByPk(req.body.id);
+    console.log("bye ", toBeDeleted);
     await toBeDeleted.destroy();
     res.send(toBeDeleted);
   } catch (error) {
@@ -83,8 +84,27 @@ albumRouter.post("/", async (req, res, next) => {
 
 albumRouter.put("/:albumId", async (req, res, next) => {
   try {
+    let createArtist = false;
+    let artistSearch = await Artist.findOne({
+      where: {
+        name: req.body.artistName,
+      },
+    });
+
+    //console.log("artistSEeache", artistSearch);
+
+    // if !artist, make new artist
+    if (!artistSearch) {
+      artistSearch = await Artist.create({ name: req.body.artistName });
+      createArtist = true;
+    }
+
     const albumId = req.params.albumId;
     const updatedAlbum = await Album.findByPk(albumId);
+    await updatedAlbum.updaet(req.body);
+    if (createArtist) {
+      res.send(updatedAlbum, artistSearch);
+    }
     res.send(await updatedAlbum.update(req.body));
   } catch (error) {
     next(error);
