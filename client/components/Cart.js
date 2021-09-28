@@ -48,9 +48,9 @@ class Cart extends Component {
 
   render() {
     const albums = this.props.isLoggedIn ? this.props.cart.albums : JSON.parse(window.localStorage.getItem('CART'));
-    console.log(albums)
+    console.log('albums', albums)
 
-    if (!albums || albums.length === 0) {
+    if ((!albums || albums.length === 0)) {
       return <><h1 className="cart-title">Shopping Cart</h1><h1>EMPTY</h1></>;
     } else {
       const invoiceTotal = this.calculateCartTotal(albums);
@@ -81,8 +81,8 @@ class Cart extends Component {
                   <TableCell >{product.title}</TableCell>
                   {/* TODO: add artist to product */}
                   <TableCell >{product.artist.name}</TableCell>
-                  <TableCell align="right">{product.quantity}</TableCell>
-                  <TableCell align="right">${this.fixPrice(product.price * product.quantity)}</TableCell>
+                  <TableCell align="right">{product.orderAlbum.quantity}</TableCell>
+                  {/* <TableCell align="right">${this.fixPrice(product.orderAlbum.cost * product.orderAlbum.quantity)}</TableCell> */}
                   <TableCell align="right">
                     <button onClick={() => this.removeAlbum(product.id)}>Delete</button>
                   </TableCell>
