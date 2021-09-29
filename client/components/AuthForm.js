@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {authLogin, authSignup} from '../store'
+import { fetchAllEmails } from "../redux/guestUsers";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 class AuthForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitType: 'login'
+      submitType: 'login',
     }
   }
 
   componentDidMount() {
+    this.props.getEmails();
     this.setState({ submitType: this.props.name })
   }
 
@@ -20,14 +23,26 @@ class AuthForm extends Component {
     this.setState({ submitType: submitType });
   }
 
-  handleSubmit(e) {
+  handleSubmit(e, emails) {
     e.preventDefault();
+    if (this.state.submitType === 'signup' &&
+      emails.filter(email => email === e.target.email.value)) {
+        toast.error('Email already exists.!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      return;
+    }
     if (this.state.submitType === 'login') {
       const email = e.target.email.value;
       const password = e.target.password.value;
       this.props.authLogin(email, password);
     } else {
-      //TODO: validate email isn't duplicate with conditional
       const email = e.target.email.value;
       const password = e.target.password.value;
       const firstName = e.target.firstName.value;
@@ -38,34 +53,34 @@ class AuthForm extends Component {
   }
 
   render() {
-  const { error } = this.props
+  const { error, emails } = this.props
 
     return (
       <div>
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form onSubmit={(e) => this.handleSubmit(e, emails)}>
           <div>
-          <label htmlFor="email">
+          <label required htmlFor="email">
               <small>Email</small>
             </label>
-            <input name="email" type="text" />
+            <input name="email" type="text"/>
           </div>
           <div>
             <label htmlFor="password">
               <small>Password</small>
             </label>
-            <input name="password" type="password" />
+            <input required name="password" type="password" />
           </div>
           <>
             {this.state.submitType === 'signup' ? (
               <>
                 <div>
-                  <label htmlFor="firstName">
+                  <label required htmlFor="firstName">
                     <small>First Name</small>
                   </label>
                   <input name="firstName" type="text" />
                 </div>
                 <div>
-                  <label htmlFor="lastName">
+                  <label required htmlFor="lastName">
                     <small>Last Name</small>
                   </label>
                   <input name="lastName" type="text" />
@@ -80,10 +95,10 @@ class AuthForm extends Component {
               </Link>
             ) : (
               <Link className="nav-links" to="/login">
-                <button type="submit" onClick={(e) => this.handleSwitchFields(e, 'login')}>Back To Login</button> 
+                <button type="submit" onClick={(e) => this.handleSwitchFields(e, 'login')}>Back To Login</button>
               </Link>
             )}
-            <button type="submit">Submit</button> 
+            <button type="submit">Submit</button>
 
           </>
           {error && error.response && <div> {error.response.data} </div>}
@@ -93,30 +108,25 @@ class AuthForm extends Component {
   }
 }
 
-const mapLogin = (state) => ({ 
+const mapLogin = (state) => ({
   name: 'login',
   displayName: 'Login',
-  error: state.auth.error
+  error: state.auth.error,
+  emails: state.emails
 });
 
-const mapSignup = (state) => ({ 
+const mapSignup = (state) => ({
   name: 'signup',
   displayName: 'Sign Up',
-  error: state.auth.error
+  error: state.auth.error,
+  emails: state.emails
 });
 
 const mapDispatch = (dispatch) => ({
   authLogin: (email, password) => dispatch(authLogin(email, password)),
   authSignup: (email, password, firstName, lastName) => dispatch(authSignup(email, password, firstName, lastName)),
+  getEmails: () => dispatch(fetchAllEmails())
 })
-
-const mapDispatchLogin = (dispatch) => ({
-    authLogin: (email, password) => dispatch(authLogin(email, password)),
-});
-
-const mapDispatchSignup = (dispatch) => ({
-  authSignup: (email, password, firstName, lastName) => dispatch(authSignup(email, password, firstName, lastName)),
-});
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);

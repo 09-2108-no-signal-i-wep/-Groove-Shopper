@@ -35,7 +35,6 @@ class UpdateAlbum extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { title, artistName, price, releaseYear } = this.state;
     const { handleChange, handleSubmit } = this;
     return (

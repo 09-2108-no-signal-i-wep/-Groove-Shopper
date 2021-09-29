@@ -1,19 +1,21 @@
 const cart = require("express").Router();
 const {
-  models: { Album, Order },
+  models: { Album, Order, Artist },
 } = require("../db");
 const OrderAlbum = require("../db/models/OrderAlbum");
+const { requireToken } = require("./userMiddleware");
 
-// Path: /api/cart/:userId
-cart.get("/:userId", (req, res, next) => {
-  Order.findAll({
+// Path: /api/cart/user
+cart.get("/user", requireToken, (req, res, next) => {
+  Order.findOne({
     where: {
-      userId: req.params.userId,
+      userId: req.user.id,
       isCart: true,
     },
     include: [
       {
         model: Album,
+        include: [Artist],
       },
     ],
   })
@@ -21,45 +23,41 @@ cart.get("/:userId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-// POST /api/cart/:userId - ADD TO CART. This creates a new set of ORDER-Album (Details)
-
-cart.post("/:userId", async (req, res, next) => {
+// POST /api/cart/add - ADD TO CART. This creates a new set of ORDER-Album (Details)
+cart.post("/add", async (req, res, next) => {
   try {
-    const { userId } = req.params;
-    const { albumId, cost, quantity } = req.body;
+    const { albumId, quantity, cost, userId } = req.body;
 
-    const userOrder = await Order.findOne({
+    const userOrder = await Order.findOrCreate({
       where: {
         userId: userId,
         isCart: true,
       },
-    });
-
-    const newOrderDetail = await OrderAlbum.findOne({
-      where: {
-        orderId: userOrder.id,
-        albumId: albumId,
+      defaults: {
+        total: 0,
       },
     });
 
-    newOrderDetail.quantity = quantity;
-    newOrderDetail.cost = cost * quantity;
-    await newOrderDetail.save();
-    res.send(userOrder);
+    const newOrderDetail = await OrderAlbum.create({
+      orderId: userOrder[0].id,
+      albumId: albumId,
+      quantity: quantity,
+      cost: cost,
+    });
 
+    res.send(newOrderDetail);
   } catch (error) {
     console.log("cart POST error");
     next(error);
   }
 });
 
-
-// PUT /api/cart/ -- updates quantity in cart
-cart.put("/:userId", async (req, res, next) => {
+// PUT /api/cart/update -- updates quantity in cart
+cart.put("/update", requireToken, async (req, res, next) => {
   try {
     const userOrder = await Order.findOne({
       where: {
-        userId: req.params.userId,
+        userId: req.user.id,
         isCart: true,
       },
     });
@@ -77,13 +75,15 @@ cart.put("/:userId", async (req, res, next) => {
   }
 });
 
-// PUT /api/cart/:userId -- deletes an album in the cart
-cart.put("/:userId", async (req, res, next) => {
+// PUT /api/cart/remove -- deletes an album in the cart
+cart.delete("/remove", requireToken, async (req, res, next) => {
   try {
+    const { albumId } = req.body;
+
     // find the order based on userId where cart is true;
     const userOrder = await Order.findOne({
       where: {
-        userId: req.params.userId,
+        userId: req.user.id,
         isCart: true,
       },
     });
@@ -91,7 +91,7 @@ cart.put("/:userId", async (req, res, next) => {
     const deleteSingleOrderAlbum = await OrderAlbum.findOne({
       where: {
         orderId: userOrder.id,
-        albumId: req.body.id,
+        albumId: albumId,
       },
     });
 
@@ -101,22 +101,18 @@ cart.put("/:userId", async (req, res, next) => {
     console.log("Delete from cart error API");
     next(error);
   }
-
-  // OrderAlbum.findByPk(req.params.id)
-  //     .then((product) => {
-  //         product.destroy();
-  //         res.status(200).send(product);
-  //     })
-  //     .catch((err) => next(err));
 });
 
-// PUT /api/cart/:userid/checkout -- Changes order from cart to completed
-cart.put("/:userid/checkout", async (req, res, next) => {
+// PUT /api/cart/checkout -- Changes order from cart to completed
+cart.put("/checkout", requireToken, async (req, res, next) => {
   try {
-    const userOrder = await Order.findOne({
+    const userOrder = await Order.findOrCreate({
       where: {
-        userId: req.params.userId,
+        userId: req.user.id,
         isCart: true,
+      },
+      defaults: {
+        total: 0,
       },
     });
 
@@ -127,18 +123,6 @@ cart.put("/:userid/checkout", async (req, res, next) => {
     console.log("API CHECKOUT ERROR");
     next(error);
   }
-
-  // Order.findOne({
-  //   where: {
-  //     userId: req.params.userId,
-  //     isCart: true,
-  //   },
-  // })
-  //   .then((userOrder) => {
-  //     userOrder.update({ isCart: false });
-  //     res.send(userOrder);
-  //   })
-  //   .catch((err) => next(err));
 });
 
 module.exports = cart;

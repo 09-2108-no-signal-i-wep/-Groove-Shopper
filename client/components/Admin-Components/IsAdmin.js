@@ -8,7 +8,6 @@ class IsAdmin extends React.Component {
   }
 
   render() {
-    console.log("admin", this.props);
     const { updateUser, isAdmin, userId } = this.props;
     return (
       <div className="isAdmin-container" onClick={() =>updateUser(userId)}>

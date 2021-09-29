@@ -15,12 +15,9 @@ class AdminAllUsers extends Component {
   // Mounts to tree, loads data
   componentDidMount() {
     this.props.fetchUsers();
-    console.log("mounted");
-    console.log(this.props);
   }
 
   deleteButton(userId) {
-    console.log(userId);
     this.props.deleteUser(userId);
   }
 

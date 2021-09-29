@@ -1,26 +1,30 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from "react";
+import { connect } from "react-redux";
 
 /**
  * COMPONENT
  */
-export const Home = props => {
-  const {username} = props
+export const Home = (props) => {
+  const { firstName, lastName, userId, auth } = props;
 
   return (
     <div>
-      <h3>Welcome, {username}</h3>
+      <h1>Welcome To the Groovy Shopper!</h1>
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
+  console.log(state.auth);
   return {
-    username: state.auth.username
-  }
-}
+    firstName: state.auth.firstname,
+    lastName: state.auth.lastname,
+    userId: state.auth.id,
+    auth: state.auth,
+  };
+};
 
-export default connect(mapState)(Home)
+export default connect(mapState)(Home);

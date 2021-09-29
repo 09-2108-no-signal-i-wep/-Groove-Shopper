@@ -9,7 +9,7 @@ class SingleAlbum extends Component {
   constructor() {
     super();
     this.state = {
-      quantity: 1
+      quantity: 1,
     };
     this.adjustPrice = this.adjustPrice.bind(this);
   }
@@ -25,42 +25,59 @@ class SingleAlbum extends Component {
     return price / 100;
   }
 
-  handleQuantity = event => {
+  handleQuantity = (event) => {
     let { value, min, max } = event.target;
     value = Math.max(Number(min), Math.min(Number(max), Number(value)));
     this.setState({ quantity: value });
-  }
+  };
 
   addToGuestCart(albumId, quantity) {
     const guestCart = window.localStorage;
-    const newAlbum = {...this.props.singleAlbum, quantity: quantity};
+    const newAlbum = { ...this.props.singleAlbum, quantity: quantity };
 
-    if (!guestCart.getItem('CART')) {
-      guestCart.setItem('CART', JSON.stringify([newAlbum]));
-      console.log('Created local storage cart', JSON.parse(guestCart.getItem('CART')));
+    if (!guestCart.getItem("CART")) {
+      guestCart.setItem("CART", JSON.stringify([newAlbum]));
+      console.log(
+        "Created local storage cart",
+        JSON.parse(guestCart.getItem("CART"))
+      );
     } else {
-      const guestCartAlbums = JSON.parse(guestCart.getItem('CART'));
-      const existingAlbum = guestCartAlbums.find(album => album.id === albumId);
+      const guestCartAlbums = JSON.parse(guestCart.getItem("CART"));
+      const existingAlbum = guestCartAlbums.find(
+        (album) => album.id === albumId
+      );
 
       if (existingAlbum) {
         existingAlbum.quantity = quantity;
-        guestCart.setItem('CART', JSON.stringify(guestCartAlbums, existingAlbum));
-        console.log('Quantity of existing album is changed in local storage');
+        guestCart.setItem(
+          "CART",
+          JSON.stringify(guestCartAlbums, existingAlbum)
+        );
+        console.log("Quantity of existing album is changed in local storage");
       } else {
-        guestCartAlbums.push(newAlbum)
-        guestCart.setItem('CART', JSON.stringify(guestCartAlbums));
-        console.log('Updated local storage cart with a new album', JSON.parse(guestCart.getItem('CART')));
+        guestCartAlbums.push(newAlbum);
+        guestCart.setItem("CART", JSON.stringify(guestCartAlbums));
+        console.log(
+          "Updated local storage cart with a new album",
+          JSON.parse(guestCart.getItem("CART"))
+        );
       }
     }
   }
 
   handleAdd = () => {
+    const newAlbum = {
+      id: this.props.singleAlbum.id,
+      quantity: this.state.quantity,
+      cost: this.props.singleAlbum.price,
+    };
+
     if (this.props.isLoggedIn) {
-      this.props.addAlbums(this.props.singleAlbum.id, this.state.quantity)
+      this.props.addAlbums({ ...newAlbum, userId: this.props.userId });
     } else {
-      this.addToGuestCart(this.props.singleAlbum.id, this.state.quantity)
+      this.addToGuestCart(this.props.singleAlbum.id, this.state.quantity);
     }
-  }
+  };
 
   render() {
     const { cover, price, releaseYear, title } = this.props.singleAlbum;
@@ -91,8 +108,11 @@ class SingleAlbum extends Component {
                 max="5"
               />
             </div>
-            <button type="submit" id="add-to-cart"
-            onClick={() => this.handleAdd()}>
+            <button
+              type="submit"
+              id="add-to-cart"
+              onClick={() => this.handleAdd()}
+            >
               Add To Cart!
             </button>
           </div>
@@ -105,14 +125,16 @@ class SingleAlbum extends Component {
 const mapState = (state) => {
   return {
     singleAlbum: state.singleAlbum,
-    isLoggedIn: !!state.userId
+    userId: state.auth.id,
+    isLoggedIn: !!state.auth.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     fetchSingleAlbum: (albumId) => dispatch(fetchSingleAlbum(albumId)),
-    addAlbums: (albumId, quantity) => dispatch(addAlbumsToCart(albumId, quantity)),
+    addAlbums: (albumId, quantity) =>
+      dispatch(addAlbumsToCart(albumId, quantity)),
   };
 };
 
