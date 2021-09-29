@@ -1,23 +1,28 @@
 import axios from "axios";
 
+// setting common token in axios
+const token = window.localStorage.getItem("token");
+axios.defaults.headers.common["Authorization"] = token;
+
+// actions
 const GET_CART = "GET_CART";
 const ADD_ALBUMS = "ADD_ALBUMS";
 const REMOVE_ALBUMS = "REMOVE_ALBUMS";
 
-export const getCart = cart => ({
+export const getCart = (cart) => ({
   type: GET_CART,
   cart,
 });
 
-export const addAlbums = albums => ({
+export const addAlbums = (albums) => ({
   type: ADD_ALBUMS,
   albums,
 });
 
-export const removeAlbums = album => ({
+export const removeAlbums = (album) => ({
   type: REMOVE_ALBUMS,
-  album
-})
+  album,
+});
 
 export const fetchAlbumsInCart = () => async (dispatch) => {
   try {
@@ -35,13 +40,13 @@ export const addAlbumsToCart = (album) => async (dispatch) => {
       albumId: album.id,
       quantity: album.quantity,
       cost: album.cost,
-      userId: album.userId
+      userId: album.userId,
     });
-    dispatch(addAlbums(data))
+    dispatch(addAlbums(data));
   } catch (error) {
     return `Error: ${error.message} || addAlbumsToCart`;
   }
-}
+};
 
 export const removeAlbumsFromCart = (albumId) => async (dispatch) => {
   try {
@@ -50,7 +55,7 @@ export const removeAlbumsFromCart = (albumId) => async (dispatch) => {
   } catch (error) {
     return `Error: ${error.message} || removeAlbumsFromCart`;
   }
-}
+};
 
 export default function cartReducer(state = [], action) {
   switch (action.type) {
@@ -59,7 +64,10 @@ export default function cartReducer(state = [], action) {
     case ADD_ALBUMS:
       return action.albums;
     case REMOVE_ALBUMS:
-      return {...state, albums: state.filter(album => album.id !== action.albumId)};
+      return {
+        ...state,
+        albums: state.filter((album) => album.id !== action.albumId),
+      };
     default:
       return state;
   }

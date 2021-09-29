@@ -44,7 +44,7 @@ class AuthForm extends Component {
       <div>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <div>
-          <label htmlFor="email">
+          <label required htmlFor="email">
               <small>Email</small>
             </label>
             <input name="email" type="text" />
@@ -53,19 +53,19 @@ class AuthForm extends Component {
             <label htmlFor="password">
               <small>Password</small>
             </label>
-            <input name="password" type="password" />
+            <input required name="password" type="password" />
           </div>
           <>
             {this.state.submitType === 'signup' ? (
               <>
                 <div>
-                  <label htmlFor="firstName">
+                  <label required htmlFor="firstName">
                     <small>First Name</small>
                   </label>
                   <input name="firstName" type="text" />
                 </div>
                 <div>
-                  <label htmlFor="lastName">
+                  <label required htmlFor="lastName">
                     <small>Last Name</small>
                   </label>
                   <input name="lastName" type="text" />
@@ -80,10 +80,10 @@ class AuthForm extends Component {
               </Link>
             ) : (
               <Link className="nav-links" to="/login">
-                <button type="submit" onClick={(e) => this.handleSwitchFields(e, 'login')}>Back To Login</button> 
+                <button type="submit" onClick={(e) => this.handleSwitchFields(e, 'login')}>Back To Login</button>
               </Link>
             )}
-            <button type="submit">Submit</button> 
+            <button type="submit">Submit</button>
 
           </>
           {error && error.response && <div> {error.response.data} </div>}
@@ -93,13 +93,13 @@ class AuthForm extends Component {
   }
 }
 
-const mapLogin = (state) => ({ 
+const mapLogin = (state) => ({
   name: 'login',
   displayName: 'Login',
   error: state.auth.error
 });
 
-const mapSignup = (state) => ({ 
+const mapSignup = (state) => ({
   name: 'signup',
   displayName: 'Sign Up',
   error: state.auth.error

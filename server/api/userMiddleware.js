@@ -9,7 +9,7 @@ const requireToken = async (req, res, next) => {
     const user = await User.findByToken(token);
     console.log(user);
     req.user = user;
-    //req.token = token;
+    req.token = token;
     console.log(req.user);
     next();
   } catch (error) {

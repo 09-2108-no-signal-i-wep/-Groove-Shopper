@@ -7,7 +7,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
     <header className="header">
       <h1 className="logo">
-        <Link to="/">Groovy Shopper</Link>
+        <Link to="/home">Groovy Shopper</Link>
       </h1>
 
 
