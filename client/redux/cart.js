@@ -2,7 +2,7 @@ import axios from "axios";
 
 // setting common token in axios
 const token = window.localStorage.getItem("token");
-axios.defaults.headers.common["Authorization"] = token;
+// axios.defaults.headers.common["Authorization"] = token;
 
 // actions
 const GET_CART = "GET_CART";
@@ -26,7 +26,11 @@ export const removeAlbums = (album) => ({
 
 export const fetchAlbumsInCart = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/cart/user`);
+    const { data } = await axios.get(`/api/cart/user`, {
+      headers: {
+        authorization: token,
+      },
+    });
     // need to pass headers here
     dispatch(getCart(data));
   } catch (error) {
@@ -50,8 +54,11 @@ export const addAlbumsToCart = (album) => async (dispatch) => {
 
 export const removeAlbumsFromCart = (albumId) => async (dispatch) => {
   try {
-    await axios.delete(`/api/cart/remove/${albumId}`);
-    dispatch(removeAlbums());
+    const { data: toBeDeleted } = await axios.delete(`/api/cart/remove`, {
+      data: { id: albumId },
+    });
+    console.log("bye", toBeDeleted);
+    dispatch(removeAlbums(toBeDeleted));
   } catch (error) {
     return `Error: ${error.message} || removeAlbumsFromCart`;
   }
@@ -64,10 +71,7 @@ export default function cartReducer(state = [], action) {
     case ADD_ALBUMS:
       return action.albums;
     case REMOVE_ALBUMS:
-      return {
-        ...state,
-        albums: state.filter((album) => album.id !== action.albumId),
-      };
+      return state.filter((album) => album.id !== action.album.id);
     default:
       return state;
   }

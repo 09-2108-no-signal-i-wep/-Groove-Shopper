@@ -76,10 +76,10 @@ cart.put("/update", requireToken, async (req, res, next) => {
   }
 });
 
-// PUT /api/cart/remove/:albumId -- deletes an album in the cart
-cart.delete("/remove/:albumId", requireToken, async (req, res, next) => {
+// PUT /api/cart/remove -- deletes an album in the cart
+cart.delete("/remove", requireToken, async (req, res, next) => {
   try {
-    const { albumId } = req.params;
+    const { albumId } = req.body;
 
     // find the order based on userId where cart is true;
     const userOrder = await Order.findOne({

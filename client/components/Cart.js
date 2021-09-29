@@ -34,9 +34,9 @@ class Cart extends Component {
     return albums.map(({ price, quantity }) => price * quantity).reduce((sum, i) => sum + i, 0);
   }
 
-  removeAlbum(albumId, orderId) {
+  removeAlbum(albumId) {
     if (this.props.isLoggedIn) {
-      this.props.removeAlbums(albumId, orderId);
+      this.props.removeAlbums(albumId);
     } else {
       const guestAlbums = JSON.parse(window.localStorage.getItem('CART'));
       const updatedAlbums = guestAlbums.filter(album => album.id !== albumId);
