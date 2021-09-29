@@ -3,13 +3,18 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     <header className="header">
-      <h1 className="logo">
-        <Link to="/home">Groovy Shopper</Link>
-      </h1>
-
+      {isAdmin ? (
+        <h1 className="logo">
+          <Link to="/admin">Groovy Shopper</Link>
+        </h1>
+      ) : (
+        <h1 className="logo">
+          <Link to="/home">Groovy Shopper</Link>
+        </h1>
+      )}
 
       <nav className="main-nav">
         {isLoggedIn ? (
@@ -42,6 +47,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

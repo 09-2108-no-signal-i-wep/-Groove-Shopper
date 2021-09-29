@@ -26,7 +26,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
 
     return (
       <div>
@@ -35,10 +35,9 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
             <Route path="/confirmed/:orderId" component={Confirmation} />
-
             <Route exact path="/albums" component={AllAlbums} />
             <Route path="/albums/:albumId" component={SingleAlbum} />
-            {/* admin stuff */}
+            {isAdmin} ? (
             <Route exact path="/admin" component={AdminWelcome} />
             <Route exact path="/admin/albums" component={AdminAllAlbums} />
             <Route
@@ -46,26 +45,21 @@ class Routes extends Component {
               path="/admin/albums/:albumId"
               component={AdminSingleAlbum}
             />
-
             <Route
               exact
               path="/admin/users/:userId"
               component={AdminSingleUser}
             />
-            <Route exact path="/admin/users" component={AdminAllUsers} />
+            <Route exact path="/admin/users" component={AdminAllUsers} />) : ( )
           </Switch>
         ) : (
           <Switch>
             <Route path="/cart" component={Cart} />
             <Route path="/confirmed/:orderId" component={Confirmation} />
-
             <Route exact path="/albums" component={AllAlbums} />
             <Route path="/albums/:albumId" component={SingleAlbum} />
-
             <Route path="/signup" component={Signup} />
-
-            {/* {/* <Route path='/' exact component={ Login } />
-            <Route path="/login" component={Login} /> */}
+            <Route path="/login" component={Login} />
           </Switch>
         )}
       </div>
@@ -81,6 +75,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 
