@@ -22,7 +22,7 @@ class AllAlbums extends Component {
         <div className="all-albums">
           {this.props.albums.map((album) => {
             return (
-              <div key={album.id}>
+              <div key={album.id} className="album">
                 <Link to={`/albums/${album.id}`}>
                   <img src={album.cover} className="all-albums-cover" />
                   <p>{album.title}</p>

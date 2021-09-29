@@ -43,15 +43,15 @@ class AuthForm extends Component {
     return (
       <div>
         <form onSubmit={(e) => this.handleSubmit(e)}>
-          <div>
+          <div className="auth-form-container">
           <label htmlFor="email">
-              <small>Email</small>
+              <small className="auth-form-text">Email</small>
             </label>
             <input name="email" type="text" />
           </div>
           <div>
             <label htmlFor="password">
-              <small>Password</small>
+              <small className="auth-form-text">Password</small>
             </label>
             <input name="password" type="password" />
           </div>
@@ -60,13 +60,13 @@ class AuthForm extends Component {
               <>
                 <div>
                   <label htmlFor="firstName">
-                    <small>First Name</small>
+                    <small className="auth-form-text">First Name</small>
                   </label>
                   <input name="firstName" type="text" />
                 </div>
                 <div>
                   <label htmlFor="lastName">
-                    <small>Last Name</small>
+                    <small className="auth-form-text">Last Name</small>
                   </label>
                   <input name="lastName" type="text" />
                 </div>
@@ -80,10 +80,10 @@ class AuthForm extends Component {
               </Link>
             ) : (
               <Link className="nav-links" to="/login">
-                <button type="submit" onClick={(e) => this.handleSwitchFields(e, 'login')}>Back To Login</button> 
+                <button type="submit" onClick={(e) => this.handleSwitchFields(e, 'login')}>Back To Login</button>
               </Link>
             )}
-            <button type="submit">Submit</button> 
+            <button type="submit">Submit</button>
 
           </>
           {error && error.response && <div> {error.response.data} </div>}
@@ -93,13 +93,13 @@ class AuthForm extends Component {
   }
 }
 
-const mapLogin = (state) => ({ 
+const mapLogin = (state) => ({
   name: 'login',
   displayName: 'Login',
   error: state.auth.error
 });
 
-const mapSignup = (state) => ({ 
+const mapSignup = (state) => ({
   name: 'signup',
   displayName: 'Sign Up',
   error: state.auth.error

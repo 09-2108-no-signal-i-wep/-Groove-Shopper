@@ -1,7 +1,10 @@
 body {
-  font-family: sans-serif;
-  background-color: #DCB239;
-
+  font-family: Helvetica;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(27,45,83,1) 10%, rgba(0,0,0,1) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 a {
@@ -12,6 +15,8 @@ h1 {
   font-size: 32px;
   font-weight: 400;
   text-align: center;
+  color: #FFFFFF;
+  font-family: Helvetica;
 }
 
 label {
@@ -28,8 +33,8 @@ form div {
 =====================================================================  */
 nav {
   align-items: center;
-  background-color: #002d73;
-  color: #c0c0c0;
+  background-color: rgba(0, 0, 0, 0);
+  color: ffffff;
   display: flex;
   height: 50px;
   padding: 0px;
@@ -42,8 +47,8 @@ nav {
 
 
 a {
-  color: white;
-  font-family: "Marker Felt", fantasy;
+  color: #ffffff;
+  font-family: Helvetica;
   font-weight: 400;
 }
 
@@ -60,37 +65,30 @@ a {
 }
 
 .main-nav a {
-  color: white;
+  color: #ffffff;
   font-size: 1.15em;
   transition: all 1.75s;
 }
 
-.main-nav a:after {
-  text-align: left;
-  content: ".";
-  margin: 0;
-  opacity: 0;
-}
-
 .main-nav a:hover {
-  background-color: white;
-  color: #002d73;
+  background-color: #e5e5e5;
+  color: #000000;
   z-index: 1;
 }
 
 .main-nav a:hover:after {
   z-index: -10;
-  animation: fill 0.6s forwards;
+  animation: fill 0.1s forwards;
   opacity: 1;
 }
 
 .header {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
-  border: 1px solid #130209;
-  background-color: #002d73;
-  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.541);
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 @media (min-width: 769px) {
@@ -116,13 +114,17 @@ a {
   All Albums
 =====================================================================  */
 .all-albums-cover {
+  display:block;
   height: 150px;
   width: 150px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .all-albums-container {
   display: flex;
   flex-direction: column;
+  padding-top: 5rem;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -132,8 +134,13 @@ a {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: space-evenly;
 }
 
+.album {
+  border-style: solid;
+  border-color: #ffffff2a;
+}
 
 /* ==================================================================
   CART
@@ -142,6 +149,7 @@ a {
 .cart-container {
   display: flex;
   flex-direction: column;
+  padding-top: 5rem;
 }
 
 #cart-img {
@@ -150,7 +158,7 @@ a {
 }
 
 #total {
-  color: black;
+  color: #FFFFFF;
 }
 
 
@@ -164,7 +172,7 @@ a {
 }
 
 /* ==================================================================
- SINGLE ALBUM
+SINGLE ALBUM
 =====================================================================  */
 
 .single-album-artwork {
@@ -175,11 +183,12 @@ a {
 .single-album-container {
   display: flex;
   flex-direction: row;
+  padding-top: 5rem;
+  color: white;
 }
 
-.single-album-info h2,h3{
-  color: black;
-}
+/* .single-album-info h2,h3{
+} */
 
 #add-to-cart {
   width: 100px;
@@ -214,7 +223,6 @@ a {
 }
 
 
-
 /* ==================================================================
   All Users
 =====================================================================  */
@@ -222,9 +230,42 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-top: 5rem;
 }
 
 #userImage {
   height: 200px;
   width: 200px;
+}
+
+.user-name {
+  color: white;
+}
+
+/* ==================================================================
+  Admin
+=====================================================================  */
+.admin-page-container {
+  padding-top: 5rem;
+}
+
+.add-album-container {
+  padding-top: 5rem;
+  color: white;
+}
+
+.add-album-form {
+  color: white;
+}
+
+
+/* ==================================================================
+  Sign up form
+=====================================================================  */
+.auth-form-container {
+  padding-top: 5rem;
+}
+
+.auth-form-text {
+  color: white;
 }
