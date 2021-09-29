@@ -61,7 +61,7 @@ class Cart extends Component {
 
     let localCart = localStorage.getItem('CART');
 
-    if(!this.props.isLoggedIn && !localCart){
+    if(!this.props.isLoggedIn && localCart.length <= 2){
       return (
       <div>
         <h1>Your Cart is Empty!</h1>
