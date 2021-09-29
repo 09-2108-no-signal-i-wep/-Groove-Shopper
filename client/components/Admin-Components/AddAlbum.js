@@ -38,7 +38,7 @@ class AddAlbum extends Component {
     const { handleChange, handleSubmit } = this;
     return (
       <div className="add-album-container">
-        <h1>Add New Album</h1>
+        <h1 className="cart-title">Add New Album</h1>
         <div className="add-album-form">
           <form onSubmit={handleSubmit}>
             <label className="add-album-text" htmlFor="title">
