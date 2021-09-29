@@ -2,7 +2,7 @@ import axios from "axios";
 
 // setting common token in axios
 const token = window.localStorage.getItem("token");
-// axios.defaults.headers.common["Authorization"] = token;
+//axios.defaults.headers.common["Authorization"] = token;
 
 // actions
 const GET_CART = "GET_CART";
@@ -57,11 +57,21 @@ export const removeAlbumsFromCart = (albumId) => async (dispatch) => {
     const { data: toBeDeleted } = await axios.delete(`/api/cart/remove`, {
       data: { id: albumId },
     });
-    console.log("bye", toBeDeleted);
+
     dispatch(removeAlbums(toBeDeleted));
   } catch (error) {
     return `Error: ${error.message} || removeAlbumsFromCart`;
   }
+};
+//
+export const checkout = () => {
+  return async () => {
+    try {
+      const { data: checkoutCart } = await axios.put("/api/cart/checkout");
+    } catch (error) {
+      return `Error ${error.message}`;
+    }
+  };
 };
 
 export default function cartReducer(state = [], action) {

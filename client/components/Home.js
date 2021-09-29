@@ -9,7 +9,7 @@ export const Home = (props) => {
 
   return (
     <div>
-      <h3>Welcome</h3>
+      <h1>Welcome To the Groovy Shopper!</h1>
     </div>
   );
 };

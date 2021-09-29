@@ -1,4 +1,5 @@
 import axios from "axios";
+const token = window.localStorage.getItem("token");
 
 const GET_ALL_USERS = "GET_ALL_USERS";
 const DELETE_USER = "DELETE_USER";
@@ -21,11 +22,14 @@ const removeUser = (user) => {
 const fetchAllUsers = () => {
   return async (dispatch) => {
     try {
-      const { data: allUsers } = await axios.get("/api/admin/users");
-      console.log("aa;a", allUsers);
+      const { data: allUsers } = await axios.get("/api/admin/users", {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(getAllUsers(allUsers));
     } catch (error) {
-      console.log("get users thunk error", error);
+      console.log("get emails thunk error", error);
     }
   };
 };
@@ -33,11 +37,18 @@ const fetchAllUsers = () => {
 const deleteUser = (userId) => {
   return async (dispatch) => {
     try {
-      const { data: oldUser } = await axios.delete("/api/admin/users", {
-        data: { id: userId },
-      });
+      const { data: oldUser } = await axios.delete(
+        "/api/admin/users",
+        {
+          data: { id: userId },
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
 
-      console.log("gone", oldUser);
       dispatch(removeUser(oldUser));
     } catch (error) {
       return `Error ${error.message} || delete User Thunk`;

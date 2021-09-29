@@ -17,7 +17,6 @@ albumRouter.get("/", async (req, res, next) => {
 // GET /api/albums/:albumId
 albumRouter.get("/:albumId", async (req, res, next) => {
   try {
-    console.log("in single album router");
     const singleAlbum = await Album.findByPk(req.params.albumId, {
       include: {
         model: Artist,
@@ -35,7 +34,7 @@ albumRouter.get("/:albumId", async (req, res, next) => {
 albumRouter.delete("/", async (req, res, next) => {
   try {
     const toBeDeleted = await Album.findByPk(req.body.id);
-    console.log("bye ", toBeDeleted);
+
     await toBeDeleted.destroy();
     res.send(toBeDeleted);
   } catch (error) {
@@ -48,14 +47,12 @@ albumRouter.post("/", async (req, res, next) => {
   try {
     // find artist by name
     let createArtist = false;
-    console.log("reeq body", req.body);
+
     let artistSearch = await Artist.findOne({
       where: {
         name: req.body.artistName,
       },
     });
-
-    console.log("artistSEeache", artistSearch);
 
     // if !artist, make new artist
     if (!artistSearch) {
@@ -71,7 +68,6 @@ albumRouter.post("/", async (req, res, next) => {
       // need to upload cover art
     });
 
-    console.log("new album", newAlbum);
     if (createArtist) {
       res.send({ artistSearch, newAlbum });
     } else {
@@ -90,8 +86,6 @@ albumRouter.put("/:albumId", async (req, res, next) => {
         name: req.body.artistName,
       },
     });
-
-    //console.log("artistSEeache", artistSearch);
 
     // if !artist, make new artist
     if (!artistSearch) {

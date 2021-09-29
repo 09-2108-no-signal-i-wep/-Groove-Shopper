@@ -8,6 +8,7 @@ import singleAlbumReducer from "../redux/singleAlbum";
 import cartReducer from "../redux/cart";
 import usersReducer from "../redux/users";
 import singleUserReducer from "../redux/singleUser";
+import guestUsersReducer from "../redux/guestUsers";
 
 const reducer = combineReducers({
   auth,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   singleAlbum: singleAlbumReducer,
   cart: cartReducer,
   users: usersReducer,
+  emails: guestUsersReducer,
   singleUser: singleUserReducer,
 });
 

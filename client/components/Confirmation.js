@@ -11,14 +11,14 @@ class Confirmation extends Component {
       <div className="confirmation-container">
         <div className="order-info">
           <h1>Purchase Complete!</h1>
-          <h3>Order Number: 420 </h3>
+          <h3>Order Number: 001 </h3>
           <h3>Estimated Shipping: Its Already There!</h3>
           <h3>Thanks for support a fake business!!</h3>
         </div>
         <div className="small-cart-table">
           <h2>Your Order:</h2>
-          <CartTable />
-          <h2>Total: $FAKE DOLLARS</h2>
+          {/* <CartTable /> */}
+          <h2>Total: $Money Doesn't Exist</h2>
         </div>
       </div>
     );

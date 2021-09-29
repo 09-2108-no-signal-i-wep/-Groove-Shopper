@@ -39,36 +39,59 @@ class CartTable extends Component {
   }
   render() {
     const { fixPrice } = this;
+    const { albums, removeAlbum, invoiceTotal } = this.props;
 
+    if (!albums || albums.length === 0) {
+      return (
+        <>
+          <h1 className="cart-title">Shopping Cart</h1>
+          <h1>EMPTY</h1>
+        </>
+      );
+    }
     return (
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 300 }} aria-label="simple table">
+      <TableContainer component={Paper} class="cart-table">
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Shopping Cart</TableCell>
-              <TableCell align="right">Title</TableCell>
-              <TableCell align="right">Artist</TableCell>
-              <TableCell align="right">Price</TableCell>
+              <TableCell align="center" colSpan={3}>
+                Details
+              </TableCell>
               <TableCell align="right">Qty</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right"></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Artist</TableCell>
             </TableRow>
           </TableHead>
-
           <TableBody>
-            {productRows.map((product) => (
-              <TableRow
-                key={product.title}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+            {albums.map((product) => (
+              <TableRow key={product.title}>
                 <TableCell component="th" scope="row">
-                  <img id='cart-img' src={product.coverArt} />
+                  <img id="cart-img" src={product.cover} />
                 </TableCell>
-                <TableCell alight="right">{product.title}</TableCell>
-                <TableCell alight="right">{product.artist}</TableCell>
-                <TableCell alight="right">${fixPrice(product.price)}</TableCell>
-                <TableCell alight="right">{product.quantity}</TableCell>
+                <TableCell>{product.title}</TableCell>
+                {/* TODO: add artist to product */}
+                <TableCell>{product.artist.name}</TableCell>
+                {/* <TableCell align="right">{product.quantity}</TableCell> */}
+                {/* <TableCell align="right">${this.fixPrice(product.orderAlbum.cost * product.orderAlbum.quantity)}</TableCell> */}
+                <TableCell align="right">
+                  <button onClick={() => removeAlbum(product.id)}>
+                    Delete
+                  </button>
+                </TableCell>
               </TableRow>
             ))}
-            <TableRow></TableRow>
+            <TableRow>
+              <TableCell rowSpan={2} />
+              <TableCell align="right" colSpan={3}>
+                <b>Total</b>
+              </TableCell>
+              <TableCell align="right">${fixPrice(invoiceTotal)}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

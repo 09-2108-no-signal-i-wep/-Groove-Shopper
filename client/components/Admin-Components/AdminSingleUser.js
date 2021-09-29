@@ -16,11 +16,8 @@ class AdminSingleUser extends Component {
   }
 
   render() {
-    console.log("pproppy", this.props);
     const { firstName, lastName, email, isAdmin, id } = this.props.singleUser;
-    // if (artist === undefined) {
-    //   return <h1>LOADING</h1>;
-    // } else {
+
     return (
       <div className="single-user-container">
         <h2>{`${firstName} ${lastName}`}</h2>

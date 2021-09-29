@@ -18,7 +18,6 @@ class AdminAllAlbums extends Component {
   }
 
   deleteButton(albumId) {
-    console.log(albumId);
     this.props.deleteAlbum(albumId);
   }
 
