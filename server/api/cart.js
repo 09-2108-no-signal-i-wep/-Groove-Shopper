@@ -7,10 +7,11 @@ const OrderAlbum = require("../db/models/OrderAlbum");
 const { requireToken } = require("./userMiddleware");
 
 // Path: /api/cart/user
-cart.get("/user/:userId", (req, res, next) => {
+cart.get("/user", requireToken, (req, res, next) => {
+
   Order.findOne({
     where: {
-      userId: req.params.userId,
+      userId: req.user.id,
       isCart: true,
     },
     include: [
@@ -26,7 +27,7 @@ cart.get("/user/:userId", (req, res, next) => {
 
 // POST /api/cart/add - ADD TO CART. This creates a new set of ORDER-Album (Details)
 
-cart.post("/add", requireToken, async (req, res, next) => {
+cart.post("/add", async (req, res, next) => {
   try {
     console.log("boddy", req.body);
     const { albumId, quantity, cost, userId } = req.body;

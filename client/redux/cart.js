@@ -19,9 +19,10 @@ export const removeAlbums = album => ({
   album
 })
 
-export const fetchAlbumsInCart = (userId) => async (dispatch) => {
+export const fetchAlbumsInCart = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/cart/user/${userId}`);
+    const { data } = await axios.get(`/api/cart/user`);
+    // need to pass headers here
     dispatch(getCart(data));
   } catch (error) {
     return `Error: ${error.message} || fetchAlbumsInCart`;

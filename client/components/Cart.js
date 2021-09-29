@@ -19,7 +19,7 @@ class Cart extends Component {
 
   componentDidMount() {
     if (this.props.isLoggedIn) {
-      this.props.fetchAlbums(this.props.userId); // added component did mount function
+      this.props.fetchAlbums(); // added component did mount function
     } else {
       const guestUser = JSON.parse(window.localStorage.getItem('CART'));
       this.setState({ albums: guestUser });
@@ -81,7 +81,7 @@ class Cart extends Component {
                   <TableCell >{product.title}</TableCell>
                   {/* TODO: add artist to product */}
                   <TableCell >{product.artist.name}</TableCell>
-                  <TableCell align="right">{product.quantity}</TableCell>
+                  {/* <TableCell align="right">{product.quantity}</TableCell> */}
                   {/* <TableCell align="right">${this.fixPrice(product.orderAlbum.cost * product.orderAlbum.quantity)}</TableCell> */}
                   <TableCell align="right">
                     <button onClick={() => this.removeAlbum(product.id)}>Delete</button>
@@ -111,7 +111,7 @@ class Cart extends Component {
 const mapState = (state) => ({ cart: state.cart, userId: state.auth.id, isLoggedIn: !!state.auth.id });
 
 const mapDispatch = (dispatch) => ({
-  fetchAlbums: (userId) => dispatch(fetchAlbumsInCart(userId)),
+  fetchAlbums: () => dispatch(fetchAlbumsInCart()),
   removeAlbums: (albumId) => dispatch(removeAlbumsFromCart(albumId)),
 });
 
