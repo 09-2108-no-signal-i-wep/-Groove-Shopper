@@ -21,8 +21,14 @@ class Cart extends Component {
     if (this.props.isLoggedIn) {
       this.props.fetchAlbums(); // added component did mount function
     } else {
-      const guestUser = JSON.parse(window.localStorage.getItem('CART'));
-      this.setState({ albums: guestUser });
+      let localCart = localStorage.getItem('CART');
+      if(!localCart){
+        return
+      } else {
+        const guestUser = JSON.parse(localStorage.getItem('CART'));
+        console.log('guest user', guestUser)
+        this.setState({ albums: guestUser });
+      }
     }
   }
 

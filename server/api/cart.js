@@ -1,5 +1,4 @@
 const cart = require("express").Router();
-
 const {
   models: { Album, Order, Artist },
 } = require("../db");

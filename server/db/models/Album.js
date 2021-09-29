@@ -30,8 +30,8 @@ const Album = db.define("album", {
   },
   cover: {
     type: TEXT,
-    allowNull: false,
-    validate: { notEmpty: true },
+    defaultValue:
+      "https://ctl.s6img.com/society6/img/NRs_DGWuFscSGOFMDBShBAJrlFc/w_700/prints/~artwork/s6-original-art-uploads/society6/uploads/misc/be717f86046f43bca5d182d47aaf9d2d/~~/vinyl-record808704-prints.jpg",
   },
 });
 

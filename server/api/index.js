@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const usersRouter = require('./users');
+const userRouter = require('./users');
 const albumsRouter = require('./albums');
 const cartRouter = require('./cart');
 
-router.use('/users', usersRouter);
+router.use('/admin/users', userRouter);
 router.use('/albums', albumsRouter);
 router.use('/cart', cartRouter);
 

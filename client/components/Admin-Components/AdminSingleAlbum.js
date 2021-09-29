@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchSingleAlbum } from "../redux/singleAlbum";
-import { addAlbumsToCart } from "../redux/cart";
+import { fetchSingleAlbum } from "../../redux/singleAlbum";
+import { addAlbumsToCart } from "../../redux/cart";
+import UpdateAlbum from "./UpdateAlbum";
 
 /// Single Album
 
-class SingleAlbum extends Component {
+class AdminSingleAlbum extends Component {
   constructor() {
     super();
     this.state = {
-      quantity: 1
+      quantity: 1,
     };
     this.adjustPrice = this.adjustPrice.bind(this);
   }
@@ -25,7 +26,7 @@ class SingleAlbum extends Component {
     return price / 100;
   }
 
-  handleQuantity = event => {
+  handleQuantity(event) {
     let { value, min, max } = event.target;
     value = Math.max(Number(min), Math.min(Number(max), Number(value)));
     this.setState({ quantity: value });
@@ -33,40 +34,40 @@ class SingleAlbum extends Component {
 
   addToGuestCart(albumId, quantity) {
     const guestCart = window.localStorage;
-    const newAlbum = {...this.props.singleAlbum, quantity: quantity};
+    const newAlbum = { ...this.props.singleAlbum, quantity: quantity };
 
-    if (!guestCart.getItem('CART')) {
-      guestCart.setItem('CART', JSON.stringify([newAlbum]));
-      console.log('Created local storage cart', JSON.parse(guestCart.getItem('CART')));
+    if (guestCart.length === 0) {
+      guestCart.setItem("CART", JSON.stringify([newAlbum]));
+      console.log(
+        "Created localstorage cart",
+        JSON.parse(guestCart.getItem("CART"))
+      );
     } else {
-      const guestCartAlbums = JSON.parse(guestCart.getItem('CART'));
-      const existingAlbum = guestCartAlbums.find(album => album.id === albumId);
+      const guestCartAlbums = JSON.parse(guestCart.getItem("CART"));
+      const existingAlbum = guestCartAlbums.filter(
+        (album) => album.id === albumId
+      );
 
-      if (existingAlbum) {
-        existingAlbum.quantity = quantity;
-        guestCart.setItem('CART', JSON.stringify(guestCartAlbums, existingAlbum));
-        console.log('Quantity of existing album is changed in local storage');
-      } else {
-        guestCartAlbums.push(newAlbum)
-        guestCart.setItem('CART', JSON.stringify(guestCartAlbums));
-        console.log('Updated local storage cart with a new album', JSON.parse(guestCart.getItem('CART')));
+      if (existingAlbum.length === 0) {
+        guestCart.setItem(
+          "CART",
+          JSON.stringify([...guestCartAlbums, newAlbum])
+        );
+        console.log(
+          "Updated localstorage cart with a new album",
+          JSON.parse(guestCart.getItem("CART"))
+        );
       }
     }
   }
 
   handleAdd = () => {
-    const newAlbum = {
-      id: this.props.singleAlbum.id,
-      quantity: this.state.quantity,
-      cost: this.props.singleAlbum.price
-    }
-
     if (this.props.isLoggedIn) {
-      this.props.addAlbums({ ...newAlbum, userId: this.props.userId });
+      this.props.addAlbums(this.props.singleAlbum.id, this.state.quantity);
     } else {
-      this.addToGuestCart(this.props.singleAlbum.id, this.state.quantity)
+      this.addToGuestCart(this.props.singleAlbum.id, this.state.quantity);
     }
-  }
+  };
 
   render() {
     const { cover, price, releaseYear, title } = this.props.singleAlbum;
@@ -78,6 +79,7 @@ class SingleAlbum extends Component {
     } else {
       return (
         <div className="single-album-container">
+          <UpdateAlbum />
           <div id="album-artwork-container">
             <img src={cover} className="single-album-artwork" />
             <h5>Released: {releaseYear}</h5>
@@ -97,8 +99,11 @@ class SingleAlbum extends Component {
                 max="5"
               />
             </div>
-            <button type="submit" id="add-to-cart"
-            onClick={() => this.handleAdd()}>
+            <button
+              type="submit"
+              id="add-to-cart"
+              onClick={() => this.handleAdd()}
+            >
               Add To Cart!
             </button>
           </div>
@@ -109,19 +114,18 @@ class SingleAlbum extends Component {
 }
 
 const mapState = (state) => {
-  console.log(state)
   return {
     singleAlbum: state.singleAlbum,
-    userId: state.auth.id,
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.userId,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     fetchSingleAlbum: (albumId) => dispatch(fetchSingleAlbum(albumId)),
-    addAlbums: (albumId, quantity) => dispatch(addAlbumsToCart(albumId, quantity)),
+    addAlbums: (albumId, quantity) =>
+      dispatch(addAlbumsToCart(albumId, quantity)),
   };
 };
 
-export default connect(mapState, mapDispatch)(SingleAlbum);
+export default connect(mapState, mapDispatch)(AdminSingleAlbum);

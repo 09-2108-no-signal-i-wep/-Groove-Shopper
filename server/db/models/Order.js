@@ -1,7 +1,7 @@
-const { DECIMAL, INTEGER, BOOLEAN, DATE } = require('sequelize');
-const db = require('../db');
+const { INTEGER, BOOLEAN, DATE } = require("sequelize");
+const db = require("../db");
 
-const Order = db.define('order', {
+const Order = db.define("order", {
   userId: {
     type: INTEGER,
     allowNull: false,
@@ -14,15 +14,15 @@ const Order = db.define('order', {
     allowNull: false,
     defaultValue: false,
   },
-  total: {
-    type: INTEGER,
-    allowNull: false,
-  },
+  // total: {
+  //   type: INTEGER,
+  //   allowNull: false,
+  // },
   date: {
-      type: DATE,
-      allowNull: false,
-      defaultValue: Date.now()
-  }
+    type: DATE,
+    allowNull: false,
+    defaultValue: Date.now(),
+  },
 });
 
-module.exports = Order
+module.exports = Order;

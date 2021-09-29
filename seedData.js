@@ -105,7 +105,7 @@ const albums = [
     price: 1599,
     releaseYear: 2015,
     cover:
-      "https://ctl.s6img.com/society6/img/NRs_DGWuFscSGOFMDBShBAJrlFc/w_700/prints/~artwork/s6-original-art-uploads/society6/uploads/misc/be717f86046f43bca5d182d47aaf9d2d/~~/vinyl-record808704-prints.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/5/5f/Zella_Day_-_Kicker.png",
   },
   {
     title: "Gameshow",
@@ -113,7 +113,7 @@ const albums = [
     price: 1199,
     releaseYear: 2016,
     cover:
-      "https://ctl.s6img.com/society6/img/NRs_DGWuFscSGOFMDBShBAJrlFc/w_700/prints/~artwork/s6-original-art-uploads/society6/uploads/misc/be717f86046f43bca5d182d47aaf9d2d/~~/vinyl-record808704-prints.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/b/b9/Gameshow_album_art.jpg",
   },
   {
     title: "Saturation III",
@@ -121,7 +121,7 @@ const albums = [
     price: 1999,
     releaseYear: 2017,
     cover:
-      "https://ctl.s6img.com/society6/img/NRs_DGWuFscSGOFMDBShBAJrlFc/w_700/prints/~artwork/s6-original-art-uploads/society6/uploads/misc/be717f86046f43bca5d182d47aaf9d2d/~~/vinyl-record808704-prints.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/9/93/Brockhampton_-_Saturation_III.png",
   },
   {
     title: "Hunky Dory",
@@ -129,7 +129,7 @@ const albums = [
     price: 1299,
     releaseYear: 1971,
     cover:
-      "https://ctl.s6img.com/society6/img/NRs_DGWuFscSGOFMDBShBAJrlFc/w_700/prints/~artwork/s6-original-art-uploads/society6/uploads/misc/be717f86046f43bca5d182d47aaf9d2d/~~/vinyl-record808704-prints.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/4/40/David_Bowie_-_Hunky_Dory.jpg",
   },
   {
     title: "Luv is Rage 2",
@@ -137,7 +137,7 @@ const albums = [
     price: 3999,
     releaseYear: 2017,
     cover:
-      "https://ctl.s6img.com/society6/img/NRs_DGWuFscSGOFMDBShBAJrlFc/w_700/prints/~artwork/s6-original-art-uploads/society6/uploads/misc/be717f86046f43bca5d182d47aaf9d2d/~~/vinyl-record808704-prints.jpg",
+      "https://images-na.ssl-images-amazon.com/images/I/81TNEeBI11L._SL1425_.jpg",
   },
   {
     title: "Billy Breathes",
@@ -193,7 +193,10 @@ const orders = [
   {
     userId: 1,
     isCart: true,
-    total: 5000,
+  },
+  {
+    userId: 2,
+    isCart: true,
   },
   {
     userId: 2,
@@ -213,7 +216,6 @@ const orders = [
   {
     userId: 5,
     isCart: true,
-    total: 4200,
   },
 ];
 
