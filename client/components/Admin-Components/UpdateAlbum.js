@@ -53,7 +53,7 @@ class UpdateAlbum extends Component {
               value={title}
             />
 
-            <label className="update-album-text" htmlFor="artistName">
+            {/* <label className="update-album-text" htmlFor="artistName">
               Artist
             </label>
             <input
@@ -61,7 +61,7 @@ class UpdateAlbum extends Component {
               onChange={handleChange}
               name="artistName"
               value={artistName}
-            />
+            /> */}
 
             <label className="update-album-text" htmlFor="price">
               Price

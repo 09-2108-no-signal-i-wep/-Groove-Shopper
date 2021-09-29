@@ -3,17 +3,34 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     <header className="header">
-      <h1 className="logo">
-        <Link to="/">Groovy Shopper</Link>
-      </h1>
-
+      {isAdmin ? (
+        <h1 className="logo">
+          <Link to="/admin">Groovy Shopper</Link>
+        </h1>
+      ) : (
+        <h1 className="logo">
+          <Link to="/home">Groovy Shopper</Link>
+        </h1>
+      )}
 
       <nav className="main-nav">
         {isLoggedIn ? (
           <>
+            {isAdmin ? (
+              <>
+                <Link className="nav-links" to="/admin/albums">
+                  Manage Albums
+                </Link>
+                <Link className="nav-links" to="/admin/users">
+                  Manage Users
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
             <a className="nav-links" href="#" onClick={handleClick}>
               Logout
             </a>
@@ -23,7 +40,6 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <Link className="nav-links" to="/login">
               Login
             </Link>
-
           </>
         )}
         <Link className="nav-links" to="/albums">
@@ -43,6 +59,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

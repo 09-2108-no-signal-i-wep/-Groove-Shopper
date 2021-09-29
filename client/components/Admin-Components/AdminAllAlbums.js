@@ -29,7 +29,7 @@ class AdminAllAlbums extends Component {
       <React.Fragment>
         <AddAlbum />
         <div className="all-albums">
-          <h1>All Albums</h1>
+          <h1 className="cart-title">All Albums</h1>
           {this.props.albums.map((album) => {
             return (
               <div key={album.id}>

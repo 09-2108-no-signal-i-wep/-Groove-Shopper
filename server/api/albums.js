@@ -84,27 +84,27 @@ albumRouter.post("/", async (req, res, next) => {
 
 albumRouter.put("/:albumId", async (req, res, next) => {
   try {
-    let createArtist = false;
-    let artistSearch = await Artist.findOne({
-      where: {
-        name: req.body.artistName,
-      },
-    });
+    // let createArtist = false;
+    // let artistSearch = await Artist.findOne({
+    //   where: {
+    //     name: req.body.artistName,
+    //   },
+    // });
 
-    //console.log("artistSEeache", artistSearch);
+    // //console.log("artistSEeache", artistSearch);
 
-    // if !artist, make new artist
-    if (!artistSearch) {
-      artistSearch = await Artist.create({ name: req.body.artistName });
-      createArtist = true;
-    }
+    // // if !artist, make new artist
+    // if (!artistSearch) {
+    //   artistSearch = await Artist.create({ name: req.body.artistName });
+    //   createArtist = true;
+    // }
 
     const albumId = req.params.albumId;
     const updatedAlbum = await Album.findByPk(albumId);
-    await updatedAlbum.updaet(req.body);
-    if (createArtist) {
-      res.send(updatedAlbum, artistSearch);
-    }
+    await updatedAlbum.update(req.body);
+    // if (createArtist) {
+    //   res.send(updatedAlbum, artistSearch);
+    // }
     res.send(await updatedAlbum.update(req.body));
   } catch (error) {
     next(error);

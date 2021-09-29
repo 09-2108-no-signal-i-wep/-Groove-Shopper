@@ -17,7 +17,7 @@ class Confirmation extends Component {
         </div>
         <div className="small-cart-table">
           <h2>Your Order:</h2>
-          <CartTable />
+          {/* <CartTable /> */}
           <h2>Total: $FAKE DOLLARS</h2>
         </div>
       </div>

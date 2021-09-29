@@ -18,7 +18,7 @@ class AllAlbums extends Component {
     return (
 
       <div className="all-albums-container">
-        <h1>All Albums</h1>
+        <h1 className="cart-title">All Albums</h1>
         <div className="all-albums">
           {this.props.albums.map((album) => {
             return (

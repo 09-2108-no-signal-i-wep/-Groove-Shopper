@@ -32,7 +32,7 @@ class AdminAllUsers extends Component {
     return (
       <React.Fragment>
         <div className="allUsers-container">
-          <h1>Active Accounts</h1>
+          <h1 className="cart-title">Active Accounts</h1>
 
           {users.map((user) => {
             return (
