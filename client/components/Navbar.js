@@ -7,9 +7,13 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     <header className="header">
       {isAdmin ? (
-        <h1 className="logo">
-          <Link to="/admin">Groovy Shopper</Link>
-        </h1>
+        <>
+          <h1 className="logo">
+            <Link to="/admin">Groovy Shopper</Link>
+          </h1>
+          <Link to="/admin/albums">Manage Albums</Link>
+          <Link to="/admin/users">Manage Users</Link>
+        </>
       ) : (
         <h1 className="logo">
           <Link to="/home">Groovy Shopper</Link>
