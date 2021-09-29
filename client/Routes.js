@@ -37,20 +37,25 @@ class Routes extends Component {
             <Route path="/confirmed/:orderId" component={Confirmation} />
             <Route exact path="/albums" component={AllAlbums} />
             <Route path="/albums/:albumId" component={SingleAlbum} />
-            {isAdmin} ? (
-            <Route exact path="/admin" component={AdminWelcome} />
-            <Route exact path="/admin/albums" component={AdminAllAlbums} />
-            <Route
-              exact
-              path="/admin/albums/:albumId"
-              component={AdminSingleAlbum}
-            />
-            <Route
-              exact
-              path="/admin/users/:userId"
-              component={AdminSingleUser}
-            />
-            <Route exact path="/admin/users" component={AdminAllUsers} />) : ( )
+            {isAdmin ? (
+              <>
+                <Route exact path="/admin" component={AdminWelcome} />
+                <Route exact path="/admin/albums" component={AdminAllAlbums} />
+                <Route
+                  exact
+                  path="/admin/albums/:albumId"
+                  component={AdminSingleAlbum}
+                />
+                <Route
+                  exact
+                  path="/admin/users/:userId"
+                  component={AdminSingleUser}
+                />
+                <Route exact path="/admin/users" component={AdminAllUsers} />
+              </>
+            ) : (
+              <></>
+            )}
           </Switch>
         ) : (
           <Switch>

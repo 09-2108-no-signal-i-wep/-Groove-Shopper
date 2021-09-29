@@ -7,13 +7,9 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     <header className="header">
       {isAdmin ? (
-        <>
-          <h1 className="logo">
-            <Link to="/admin">Groovy Shopper</Link>
-          </h1>
-          <Link to="/admin/albums">Manage Albums</Link>
-          <Link to="/admin/users">Manage Users</Link>
-        </>
+        <h1 className="logo">
+          <Link to="/admin">Groovy Shopper</Link>
+        </h1>
       ) : (
         <h1 className="logo">
           <Link to="/home">Groovy Shopper</Link>
@@ -23,6 +19,18 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
       <nav className="main-nav">
         {isLoggedIn ? (
           <>
+            {isAdmin ? (
+              <>
+                <Link className="nav-links" to="/admin/albums">
+                  Manage Albums
+                </Link>
+                <Link className="nav-links" to="/admin/users">
+                  Manage Users
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
             <a className="nav-links" href="#" onClick={handleClick}>
               Logout
             </a>
