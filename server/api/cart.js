@@ -26,7 +26,7 @@ cart.get("/user/:userId", (req, res, next) => {
 
 // POST /api/cart/add - ADD TO CART. This creates a new set of ORDER-Album (Details)
 
-cart.post("/add", async (req, res, next) => {
+cart.post("/add", requireToken, async (req, res, next) => {
   try {
     console.log("boddy", req.body);
     const { albumId, quantity, cost, userId } = req.body;
@@ -41,18 +41,18 @@ cart.post("/add", async (req, res, next) => {
       },
     });
 
-    await OrderAlbum.create({
+    const newOrderDetail = await OrderAlbum.create({
       orderId: userOrder[0].id,
       albumId: albumId,
       quantity: quantity,
       cost: cost,
     });
 
-    const newOrderDetail = await OrderAlbum.findOne({
-      where: {
-        orderId: userOrder[0].id,
-      },
-    });
+    // const newOrderDetail = await OrderAlbum.findOne({
+    //   where: {
+    //     orderId: userOrder[0].id,
+    //   },
+    // });
 
     console.log("nnew new", newOrderDetail);
 
@@ -86,11 +86,12 @@ cart.put("/:userId", async (req, res, next) => {
   }
 });
 
-// PUT /api/cart/:userId -- deletes an album in the cart
+// PUT /api/cart/remove/:albumId -- deletes an album in the cart
 cart.delete("/remove/:albumId", requireToken, async (req, res, next) => {
   try {
     const { albumId } = req.params;
 
+    console.log("use use", req.user);
     // find the order based on userId where cart is true;
     const userOrder = await Order.findOne({
       where: {
