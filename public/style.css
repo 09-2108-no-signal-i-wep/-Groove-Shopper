@@ -183,12 +183,15 @@ SINGLE ALBUM
 .single-album-container {
   display: flex;
   flex-direction: row;
-  padding-top: 5rem;
+  padding-top: 10rem;
   color: white;
+  justify-content: center;
+  align-items: center;
 }
 
-/* .single-album-info h2,h3{
-} */
+.single-album-info {
+  padding-left: 1rem;
+}
 
 #add-to-cart {
   width: 100px;
